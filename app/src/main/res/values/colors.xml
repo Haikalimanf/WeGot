@@ -10,4 +10,7 @@
 
     <color name="primary">#5DAA80</color>
     <color name="gray">#BDBDBD</color>
+    <color name="gray_light">#F5F8FF</color>
+    <color name="gray_dark">#9DAABF</color>
+
 </resources>

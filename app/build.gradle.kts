@@ -54,8 +54,9 @@ dependencies {
     //SplashScreen
     implementation(libs.androidx.core.splashscreen)
 
-    //material (ui)
-    implementation("com.google.android.material:material:1.13.0")
+    //TimeLineView
+    implementation(libs.timelineview)
+
 
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.fragment.ktx)

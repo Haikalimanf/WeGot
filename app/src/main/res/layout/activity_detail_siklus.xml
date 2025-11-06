@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginStart="@dimen/dimen_margin_16"
-    android:layout_marginEnd="@dimen/dimen_margin_16"
-    tools:context=".ui.prediksi.tambah_fase.DetailSiklusActivity">
+    android:layout_marginEnd="@dimen/dimen_margin_16">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:title="Detail Pembesaran"
+        app:title="Detail Siklus"
         app:titleTextColor="@color/black"
         app:titleCentered="true"
         app:titleTextAppearance="@style/ToolbarTitleStyle"
@@ -22,147 +20,154 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_penetasan"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Masukkan detail fase"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:textSize="20sp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="27dp"
-        app:layout_constraintTop_toBottomOf="@id/topAppBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvTanggal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tanggal"
-        android:textSize="14sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="@dimen/dimen_margin_12"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edtTanggalPembesaran"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Masukkan Tanggal"
-        android:layout_marginTop="4dp"
-        android:elevation="0dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxStrokeColor="@color/gray"
-        android:textColorHint="@color/gray"
-        app:boxStrokeWidth="0.2dp"
-        app:endIconDrawable="@drawable/ic_calendar"
-        app:endIconMode="custom"
-        app:layout_constraintStart_toStartOf="parent"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/gray_light"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTanggal">
+        app:layout_constraintStart_toEndOf="@id/circle_top"
+        app:layout_constraintTop_toBottomOf="@id/topAppBar">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputTanggalPembesaran"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="false"
-            android:inputType="none" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:padding="@dimen/dimen_padding_16">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvJumlahMakan"
-        android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/title_penetasan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Penetasan"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/date_penetasan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="23 Oktober 2025"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/title_penetasan"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/title_penetasan" />
+
+            <TextView
+                android:id="@+id/desc_penetasan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Telur dipindahkan ke wadah penetasan"
+                android:textColor="@color/gray_dark"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_penetasan" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_pembesaran"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Jumlah Makanan"
-        android:textSize="14sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="@dimen/dimen_margin_12"
-        app:layout_constraintTop_toBottomOf="@id/edtTanggalPembesaran"/>
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/gray_light"
+        app:layout_constraintEnd_toEndOf="@id/card_penetasan"
+        app:layout_constraintStart_toStartOf="@id/card_penetasan"
+        app:layout_constraintTop_toBottomOf="@id/card_penetasan">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edtJumlahTelur"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Masukkan Jumlah Makanan"
-        android:layout_marginTop="4dp"
-        android:elevation="0dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxStrokeColor="@color/gray"
-        android:textColorHint="@color/gray"
-        app:boxStrokeWidth="0.2dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvJumlahMakan">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputJumlahMakanan"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="false"
-            android:inputType="none" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:padding="@dimen/dimen_padding_16">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvKeterangan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Keterangan"
-        android:textSize="14sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="@dimen/dimen_margin_12"
-        app:layout_constraintTop_toBottomOf="@id/edtJumlahTelur"/>
+            <TextView
+                android:id="@+id/title_pembesaran"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pembesaran"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edtKeterangan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Masukkan Keterangan (Opsional)"
-        android:layout_marginTop="4dp"
-        android:elevation="0dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxStrokeColor="@color/gray"
-        android:textColorHint="@color/gray"
-        app:boxStrokeWidth="0.2dp"
+            <TextView
+                android:id="@+id/date_pembesaran"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="23 Oktober 2025"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/title_pembesaran"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/title_pembesaran" />
+
+            <TextView
+                android:id="@+id/desc_pembesaran"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Telur menetas dipindahkan ke wadah pembesaran"
+                android:textColor="@color/gray_dark"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@id/arrow_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_pembesaran" />
+
+            <ImageView
+                android:id="@+id/arrow_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/rounded_rectangle_bg"
+                android:src="@drawable/ic_arrow_right"
+                android:padding="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <ImageView
+        android:id="@+id/circle_top"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/timeline_circle_connector"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvKeterangan">
+        app:layout_constraintTop_toTopOf="@id/card_penetasan" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputKeterangan"
-            android:layout_width="match_parent"
-            android:layout_height="92dp"
-            android:gravity="top|start"
-            android:inputType="textMultiLine"
-            android:minLines="4"
-            android:maxLines="6"
-            android:scrollbars="vertical"/>
-    </com.google.android.material.textfield.TextInputLayout>
+    <ImageView
+        android:id="@+id/circle_bottom"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/timeline_circle_connector"
+        app:layout_constraintStart_toStartOf="@id/circle_top"
+        app:layout_constraintTop_toTopOf="@id/card_pembesaran" />
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_marginTop="@dimen/dimen_margin_24"
-        android:text="Simpan"
-        android:textAllCaps="false"
-        android:textStyle="bold"
-        android:backgroundTint="@color/primary"
-        android:textColor="@color/white"
-        app:cornerRadius="12dp"
-        app:layout_constraintTop_toBottomOf="@id/edtKeterangan"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+    <View
+        android:id="@+id/line_connector"
+        android:layout_width="4dp"
+        android:layout_height="0dp"
+        android:background="#69A283"
+        app:layout_constraintBottom_toTopOf="@id/circle_bottom"
+        app:layout_constraintEnd_toEndOf="@id/circle_top"
+        app:layout_constraintStart_toStartOf="@id/circle_top"
+        app:layout_constraintTop_toBottomOf="@id/circle_top" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
