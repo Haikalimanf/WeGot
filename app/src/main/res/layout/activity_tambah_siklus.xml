@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/dimen_padding_16"
+    android:layout_marginEnd="@dimen/dimen_padding_16"
+    tools:context=".ui.prediksi.tambah_siklus.TambahSiklusActivity">
+
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:title="Tambah Siklus"
+        app:titleTextColor="@color/black"
+        app:titleCentered="true"
+        app:titleTextAppearance="@style/ToolbarTitleStyle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Masukkan detail siklus"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginTop="27dp"
+        app:layout_constraintTop_toBottomOf="@id/topAppBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTanggalMulai"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tanggal Mulai"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/dimen_margin_12"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edtTanggal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Masukkan Tanggal"
+        android:layout_marginTop="4dp"
+        android:elevation="0dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxStrokeColor="@color/gray"
+        android:textColorHint="@color/gray"
+        app:boxStrokeWidth="0.2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTanggalMulai">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputTanggal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvJumlahTelur"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Jumlah Telur"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/dimen_margin_12"
+        app:layout_constraintTop_toBottomOf="@id/edtTanggal"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edtJumlahTelur"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Masukkan Jumlah Telur"
+        android:layout_marginTop="4dp"
+        android:elevation="0dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxStrokeColor="@color/gray"
+        android:textColorHint="@color/gray"
+        app:boxStrokeWidth="0.2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvJumlahTelur">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputJumlahTelur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMediaTelur"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Media Telur"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/dimen_margin_12"
+        app:layout_constraintTop_toBottomOf="@id/edtJumlahTelur"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dpSerbukKelapa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Serbuk Kelapa"
+        android:layout_marginTop="4dp"
+        android:elevation="0dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxStrokeColor="@color/gray"
+        android:textColorHint="@color/gray"
+        app:boxStrokeWidth="0.2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvMediaTelur"
+        app:endIconMode="dropdown_menu">
+
+        <AutoCompleteTextView
+            android:id="@+id/inputMediaTelur"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="12dp"
+            android:focusable="false"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCatatan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Catatan"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/dimen_margin_12"
+        app:layout_constraintTop_toBottomOf="@id/dpSerbukKelapa"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edtCatatan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Masukkan Catatan (Opsional)"
+        android:layout_marginTop="4dp"
+        android:elevation="0dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxStrokeColor="@color/gray"
+        android:textColorHint="@color/gray"
+        app:boxStrokeWidth="0.2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCatatan">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputCatatan"
+            android:layout_width="match_parent"
+            android:layout_height="92dp"
+            android:gravity="top|start"
+            android:inputType="textMultiLine"
+            android:minLines="4"
+            android:maxLines="6"
+            android:scrollbars="vertical"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="@dimen/dimen_margin_24"
+        android:text="Simpan Siklus"
+        android:backgroundTint="@color/primary"
+        android:textColor="@color/white"
+        app:cornerRadius="12dp"
+        app:layout_constraintTop_toBottomOf="@id/edtCatatan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

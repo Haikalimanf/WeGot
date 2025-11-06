@@ -8,6 +8,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.codelabs.wegot.R
 import com.codelabs.wegot.databinding.FragmentPrediksiBinding
 
 class PrediksiFragment : Fragment() {
@@ -35,8 +37,7 @@ class PrediksiFragment : Fragment() {
         }
 
         binding.fabAddPrediksi.setOnClickListener {
-            // Handle FAB click here
-            Toast.makeText(context, "Add Prediksi Clicked", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_navigation_prediksi_to_navigation_tambah_siklus)
         }
 
         return root

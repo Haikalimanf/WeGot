@@ -17,7 +17,11 @@
         android:name="com.codelabs.wegot.ui.prediksi.PrediksiFragment"
         android:label="@string/title_prediksi"
         tools:layout="@layout/fragment_prediksi"
-    />
+    >
+        <action
+            android:id="@+id/action_navigation_prediksi_to_navigation_tambah_siklus"
+            app:destination="@id/navigation_tambah_siklus" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -25,5 +29,11 @@
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications"
     />
+    <activity
+        android:id="@+id/navigation_tambah_siklus"
+        android:name="com.codelabs.wegot.ui.prediksi.tambah_siklus.TambahSiklusActivity"
+        android:label="activity_tambah_siklus"
+        tools:layout="@layout/activity_tambah_siklus" />
+
 
 </navigation>
