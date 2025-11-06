@@ -1,17 +1,18 @@
-package com.codelabs.wegot.ui.dashboard
+package com.codelabs.wegot.ui.prediksi
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.codelabs.wegot.databinding.FragmentDashboardBinding
+import com.codelabs.wegot.databinding.FragmentPrediksiBinding
 
-class DashboardFragment : Fragment() {
+class PrediksiFragment : Fragment() {
 
-    private var _binding: FragmentDashboardBinding? = null
+    private var _binding: FragmentPrediksiBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -23,15 +24,21 @@ class DashboardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+            ViewModelProvider(this).get(PrediksiViewModel::class.java)
 
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        _binding = FragmentPrediksiBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textDashboard
         dashboardViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+
+        binding.fabAddPrediksi.setOnClickListener {
+            // Handle FAB click here
+            Toast.makeText(context, "Add Prediksi Clicked", Toast.LENGTH_SHORT).show()
+        }
+
         return root
     }
 
