@@ -29,11 +29,6 @@ class PrediksiFragment : Fragment() {
         _binding = FragmentPrediksiBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-
         binding.fabAddPrediksi.setOnClickListener {
             // Handle FAB click here
             Toast.makeText(context, "Add Prediksi Clicked", Toast.LENGTH_SHORT).show()
