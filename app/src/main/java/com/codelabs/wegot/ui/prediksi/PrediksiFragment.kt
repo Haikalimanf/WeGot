@@ -4,37 +4,54 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.codelabs.wegot.databinding.FragmentPrediksiBinding
+import com.codelabs.wegot.ui.adapter.SiklusAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PrediksiFragment : Fragment() {
 
     private var _binding: FragmentPrediksiBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private val viewModel: PrediksiViewModel by viewModels()
+    private val siklusAdapter = SiklusAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(PrediksiViewModel::class.java)
-
         _binding = FragmentPrediksiBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        observeViewModel()
 
         binding.fabAddPrediksi.setOnClickListener {
-            // Handle FAB click here
             Toast.makeText(context, "Add Prediksi Clicked", Toast.LENGTH_SHORT).show()
         }
 
-        return root
+        viewModel.getCarts()
+    }
+
+    private fun setupRecyclerView() {
+        binding.rvPrediksiSiklus.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = siklusAdapter
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.carts.observe(viewLifecycleOwner) { carts ->
+            siklusAdapter.setItems(carts)
+        }
     }
 
     override fun onDestroyView() {
