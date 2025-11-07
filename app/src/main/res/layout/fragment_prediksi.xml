@@ -4,36 +4,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".ui.prediksi.PrediksiFragment">
 
     <TextView
-        android:id="@+id/text_dashboard"
+        android:id="@+id/txt_selamat_pagi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Selamat pagi!"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCek"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Mari cek riwayat prediksi!"
+        android:textColor="@color/dark_green"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_selamat_pagi" />
+
+    <include
+        android:id="@+id/include_prediksi_dashboard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        layout="@layout/item_card_dashboard_prediksi"
+        app:layout_constraintTop_toBottomOf="@+id/tvCek"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvKondisi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Kondisi wadah "
+        android:textColor="@color/dark_green"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include_prediksi_dashboard" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_prediksi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:layout_marginTop="36dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="36dp"
+        android:backgroundTint="@color/green"
         android:contentDescription="Add Prediksi"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_dashboard"
-        app:layout_constraintVertical_bias="0.79" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCek"
+        app:layout_constraintVertical_bias="0.928"
+        app:tint="@android:color/white" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_prediksi_siklus"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvKondisi"
+        tools:listitem="@layout/item_card_prediksi_siklus" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

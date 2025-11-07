@@ -36,4 +36,11 @@
         tools:layout="@layout/activity_tambah_siklus" />
 
 
+    <activity
+        android:id="@+id/navigation_tambah_siklus"
+        android:name="com.codelabs.wegot.ui.prediksi.tambah_siklus.TambahSiklusActivity"
+        android:label="activity_tambah_siklus"
+        tools:layout="@layout/activity_tambah_siklus" />
+
+
 </navigation>
