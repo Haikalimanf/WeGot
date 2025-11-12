@@ -80,4 +80,7 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
 
+    // Grafik - Data2viz
+    implementation("com.diogobernardino:williamchart:3.10.1")
+
 }

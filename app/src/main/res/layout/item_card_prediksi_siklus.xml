@@ -1,5 +1,3 @@
-<!-- xml -->
-<!-- File: `app/src/main/res/layout/item_card_dashboard_prediksi.xml` -->
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
