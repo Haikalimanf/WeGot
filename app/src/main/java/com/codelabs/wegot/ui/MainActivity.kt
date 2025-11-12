@@ -1,4 +1,4 @@
-package com.codelabs.wegot
+package com.codelabs.wegot.ui
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
-        setupActionBarWithNavController(navController)
         navView.setupWithNavController(navController)
     }
 }
