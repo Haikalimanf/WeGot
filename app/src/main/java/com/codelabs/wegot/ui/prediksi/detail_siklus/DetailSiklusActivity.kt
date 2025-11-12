@@ -97,11 +97,6 @@ class DetailSiklusActivity : AppCompatActivity() {
         }
     }
 
-
-
-
-
-
     private fun updateSiklusList(tanggalPembesaranBaru: String) {
         val indexPembesaran = siklusList.indexOfFirst { it.title == "Pembesaran" }
 
