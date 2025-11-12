@@ -53,7 +53,6 @@
         android:id="@+id/edtTanggal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Masukkan Tanggal"
         android:layout_marginTop="4dp"
         android:elevation="0dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -63,6 +62,7 @@
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxStrokeColor="@color/gray"
         android:textColorHint="@color/gray"
+        app:hintEnabled="false"
         app:boxStrokeWidth="0.2dp"
         app:endIconDrawable="@drawable/ic_calendar"
         app:endIconMode="custom"
@@ -75,6 +75,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="false"
+            android:hint="Masukkan Tanggal"
+            android:clickable="true"
             android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,7 +94,6 @@
         android:id="@+id/edtJumlahTelur"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Masukkan Jumlah Telur"
         android:layout_marginTop="4dp"
         android:elevation="0dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -100,6 +101,7 @@
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusBottomEnd="12dp"
+        app:hintEnabled="false"
         app:boxStrokeColor="@color/gray"
         android:textColorHint="@color/gray"
         app:boxStrokeWidth="0.2dp"
@@ -111,8 +113,10 @@
             android:id="@+id/inputJumlahTelur"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="false"
-            android:inputType="none" />
+            android:focusable="true"
+            android:hint="Masukkan Jumlah Telur"
+            android:clickable="true"
+            android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -129,13 +133,13 @@
         android:id="@+id/dropDownMediaTelur"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Serbuk Kelapa"
         android:layout_marginTop="4dp"
         android:elevation="0dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:boxCornerRadiusTopStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
+        app:hintEnabled="false"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxStrokeColor="@color/gray"
         android:textColorHint="@color/gray"
@@ -150,9 +154,9 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:paddingVertical="8dp"
+            android:hint="Serbuk Kelapa"
             android:paddingHorizontal="12dp"
-            android:focusable="false"
-            android:inputType="number" />
+            android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -170,12 +174,12 @@
         android:id="@+id/edtCatatan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Masukkan Catatan (Opsional)"
         android:layout_marginTop="4dp"
         android:elevation="0dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:boxCornerRadiusTopStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
+        app:hintEnabled="false"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxStrokeColor="@color/gray"
@@ -191,6 +195,7 @@
             android:layout_height="92dp"
             android:gravity="top|start"
             android:inputType="textMultiLine"
+            android:hint="Masukkan Catatan (Opsional)"
             android:minLines="4"
             android:maxLines="6"
             android:scrollbars="vertical"/>

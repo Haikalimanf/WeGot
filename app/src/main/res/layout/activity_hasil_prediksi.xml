@@ -23,57 +23,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <com.google.android.material.card.MaterialCardView
+    <include
+        layout="@layout/item_card_prediksi_siklus"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:layout_marginEnd="@dimen/dimen_margin_small"
-        android:layout_marginStart="@dimen/dimen_margin_small"
-        android:backgroundTint="@color/yellow_light"
-        android:layout_marginTop="27dp"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="10dp"
-        app:layout_constraintTop_toBottomOf="@id/topAppBar">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginTop="31dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topAppBar"/>
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/dimen_padding_16">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvTitleCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="Hasil Prediksi Anda\nKemungkinan akan panen"
-                android:textColor="@color/green_dark"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/tvTextKg"
-                app:layout_constraintVertical_chainStyle="packed"
-                app:layout_constraintVertical_bias="0.5" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvTextKg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="10 KG"
-                android:textColor="@color/green_dark"
-                android:textSize="40sp"
-                android:textStyle="bold"
-                android:layout_marginTop="@dimen/dimen_margin"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvTitleCard"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
