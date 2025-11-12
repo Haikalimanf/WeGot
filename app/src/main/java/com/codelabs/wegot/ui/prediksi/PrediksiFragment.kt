@@ -29,7 +29,7 @@ class PrediksiFragment : Fragment() {
         _binding = FragmentPrediksiBinding.inflate(inflater, container, false)
         return binding.root
     }
-
+//tes
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
