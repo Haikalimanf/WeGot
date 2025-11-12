@@ -98,5 +98,25 @@ class TambahSiklusActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+        binding.topAppBar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+        binding.inputMediaTelur.setOnItemClickListener { adapterView, _, position, _ ->
+            val selectedItem = adapterView.getItemAtPosition(position).toString()
+            binding.dropDownMediaTelur.isHintEnabled = false
+        }
+        binding.edtTanggal.setEndIconOnClickListener {
+            showDatePickerDialog()
+        }
+        binding.inputTanggal.setOnClickListener {
+            showDatePickerDialog()
+        }
     }
+
+    private fun showDatePickerDialog() {
+        DateTimeUtils.showDatePicker(this) { selectedDate ->
+            binding.inputTanggal.setText(selectedDate)
+        }
+    }
+
 }

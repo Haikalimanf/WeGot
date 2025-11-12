@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:layout_marginStart="@dimen/dimen_margin_16"
     android:layout_marginEnd="@dimen/dimen_margin_16"
+    android:padding="@dimen/dimen_padding_16"
     tools:context=".ui.prediksi.tambah_fase.TambahFaseActivity">
 
     <com.google.android.material.appbar.MaterialToolbar

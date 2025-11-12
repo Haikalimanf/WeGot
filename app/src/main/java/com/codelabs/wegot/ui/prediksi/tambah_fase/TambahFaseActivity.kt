@@ -8,8 +8,6 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.codelabs.wegot.R
 import com.codelabs.wegot.ui.MainActivity
 import com.google.android.material.appbar.MaterialToolbar
@@ -27,11 +25,28 @@ class TambahFaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_tambah_fase)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        binding = ActivityTambahFaseBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        supportActionBar?.hide()
+
+        binding.btnSimpan.setOnClickListener {
+            startActivity(Intent(this, HasilPrediksiActivity::class.java))
+        }
+
+        binding.topAppBar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+        binding.edtTanggalPembesaran.setEndIconOnClickListener {
+            showDatePickerDialog()
+        }
+        binding.inputTanggalPembesaran.setOnClickListener {
+            showDatePickerDialog()
+        }
+    }
+
+    private fun showDatePickerDialog() {
+        DateTimeUtils.showDatePicker(this) { selectedDate ->
+            binding.inputTanggalPembesaran.setText(selectedDate)
         }
 
         inputTanggal = findViewById(R.id.inputTanggalPembesaran)

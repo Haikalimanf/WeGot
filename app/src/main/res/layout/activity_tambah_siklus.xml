@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:layout_marginStart="@dimen/dimen_padding_16"
     android:layout_marginEnd="@dimen/dimen_padding_16"
+    android:padding="@dimen/dimen_padding_16"
     tools:context=".ui.prediksi.tambah_siklus.TambahSiklusActivity">
 
 
@@ -14,15 +15,15 @@
         android:id="@+id/topAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:title="Tambah Siklus"
-        app:titleTextColor="@color/black"
         app:titleCentered="true"
         app:titleTextAppearance="@style/ToolbarTitleStyle"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
+        app:titleTextColor="@color/black" />
 
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -129,7 +130,7 @@
         app:layout_constraintTop_toBottomOf="@id/edtJumlahTelur"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dpSerbukKelapa"
+        android:id="@+id/dropDownMediaTelur"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -167,7 +168,7 @@
         android:textSize="14sp"
         android:textColor="@color/black"
         android:layout_marginTop="@dimen/dimen_margin_12"
-        app:layout_constraintTop_toBottomOf="@id/dpSerbukKelapa"/>
+        app:layout_constraintTop_toBottomOf="@id/dropDownMediaTelur"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edtCatatan"
