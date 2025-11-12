@@ -39,6 +39,10 @@ class PrediksiFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_prediksi_to_navigation_tambah_siklus)
         }
 
+        binding.imgNotification.setOnClickListener {
+            findNavController().navigate(R.id.navigation_notifications)
+        }
+
         viewModel.getCarts()
     }
 

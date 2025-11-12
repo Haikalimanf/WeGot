@@ -6,16 +6,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.codelabs.wegot.R
+import com.codelabs.wegot.databinding.ActivityHasilPrediksiBinding
+import com.codelabs.wegot.databinding.ActivityTambahFaseBinding
 
 class HasilPrediksiActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityHasilPrediksiBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_hasil_prediksi)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        binding = ActivityHasilPrediksiBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        supportActionBar?.hide()
+
+        binding.topAppBar.setNavigationOnClickListener {
+            onBackPressed()
         }
+
     }
 }

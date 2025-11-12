@@ -26,21 +26,21 @@
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.codelabs.wegot.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_chatbot"
         tools:layout="@layout/fragment_notifications"
     />
-    <activity
-        android:id="@+id/navigation_tambah_siklus"
-        android:name="com.codelabs.wegot.ui.prediksi.tambah_siklus.TambahSiklusActivity"
-        android:label="activity_tambah_siklus"
-        tools:layout="@layout/activity_tambah_siklus" />
-
 
     <activity
         android:id="@+id/navigation_tambah_siklus"
         android:name="com.codelabs.wegot.ui.prediksi.tambah_siklus.TambahSiklusActivity"
         android:label="activity_tambah_siklus"
         tools:layout="@layout/activity_tambah_siklus" />
+
+    <activity
+        android:id="@+id/navitgation_chatbot"
+        android:name="com.codelabs.wegot.ui.chatbot.ChatbotActivity"
+        android:label="activity_chatbot"
+        tools:layout="@layout/activity_chatbot" />
 
 
 </navigation>

@@ -1,4 +1,4 @@
-package com.codelabs.wegot
+package com.codelabs.wegot.ui
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
