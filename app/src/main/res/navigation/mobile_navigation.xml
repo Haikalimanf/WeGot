@@ -27,7 +27,7 @@
         android:id="@+id/navigation_notifications"
         android:name="com.codelabs.wegot.ui.notifications.NotificationsFragment"
         android:label="@string/title_chatbot"
-        tools:layout="@layout/fragment_notifications"
+        tools:layout="@layout/activity_notifications"
     />
 
     <activity

@@ -1,5 +1,6 @@
 package com.codelabs.wegot.ui.prediksi
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.codelabs.wegot.R
 import com.codelabs.wegot.databinding.FragmentPrediksiBinding
 import com.codelabs.wegot.ui.adapter.SiklusAdapter
+import com.codelabs.wegot.ui.notifications.NotificationsActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,7 +42,8 @@ class PrediksiFragment : Fragment() {
         }
 
         binding.imgNotification.setOnClickListener {
-            findNavController().navigate(R.id.navigation_notifications)
+            val intent = Intent(requireContext(), NotificationsActivity::class.java)
+            startActivity(intent)
         }
 
         viewModel.getCarts()
