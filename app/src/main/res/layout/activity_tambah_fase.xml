@@ -49,7 +49,6 @@
         android:id="@+id/edtTanggalPembesaran"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Masukkan Tanggal"
         android:layout_marginTop="4dp"
         android:elevation="0dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -62,6 +61,7 @@
         app:boxStrokeWidth="0.2dp"
         app:endIconDrawable="@drawable/ic_calendar"
         app:endIconMode="custom"
+        app:hintEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTanggal">
@@ -70,6 +70,8 @@
             android:id="@+id/inputTanggalPembesaran"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="Masukkan Tanggal"
+            android:clickable="true"
             android:focusable="false"
             android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -88,7 +90,6 @@
         android:id="@+id/edtJumlahTelur"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Masukkan Jumlah Makanan"
         android:layout_marginTop="4dp"
         android:elevation="0dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -96,6 +97,7 @@
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusBottomEnd="12dp"
+        app:hintEnabled="false"
         app:boxStrokeColor="@color/gray"
         android:textColorHint="@color/gray"
         app:boxStrokeWidth="0.2dp"
@@ -106,9 +108,11 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputJumlahMakanan"
             android:layout_width="match_parent"
+            android:hint="Masukkan Jumlah Makanan"
             android:layout_height="wrap_content"
-            android:focusable="false"
-            android:inputType="none" />
+            android:focusable="true"
+            android:clickable="true"
+            android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -125,7 +129,6 @@
         android:id="@+id/edtKeterangan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Masukkan Keterangan (Opsional)"
         android:layout_marginTop="4dp"
         android:elevation="0dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -135,6 +138,7 @@
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxStrokeColor="@color/gray"
         android:textColorHint="@color/gray"
+        app:hintEnabled="false"
         app:boxStrokeWidth="0.2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -144,6 +148,7 @@
             android:id="@+id/inputKeterangan"
             android:layout_width="match_parent"
             android:layout_height="92dp"
+            android:hint="Masukkan Keterangan (Opsional)"
             android:gravity="top|start"
             android:inputType="textMultiLine"
             android:minLines="4"
@@ -152,6 +157,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSimpanFase"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:layout_marginTop="@dimen/dimen_margin_24"

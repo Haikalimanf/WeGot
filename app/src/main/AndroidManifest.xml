@@ -16,16 +16,20 @@
         android:theme="@style/Theme.App.Starting">
         <activity
             android:name=".ui.prediksi.hasil_prediksi.HasilPrediksiActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.WeGot"/>
         <activity
             android:name=".ui.pencatatan_history.tambah_riwayat.TambahRiwayatActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.WeGot"/>
         <activity
             android:name=".ui.prediksi.detail_siklus.DetailSiklusActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.WeGot"/>
         <activity
             android:name=".ui.prediksi.tambah_fase.TambahFaseActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.WeGot"/>
         <activity
             android:name=".ui.prediksi.tambah_siklus.TambahSiklusActivity"
             android:exported="false"

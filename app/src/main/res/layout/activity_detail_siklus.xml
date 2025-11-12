@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,154 +21,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_penetasan"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSiklus"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="27dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="0dp"
-        app:cardBackgroundColor="@color/gray_light"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/circle_top"
-        app:layout_constraintTop_toBottomOf="@id/topAppBar">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_padding_16">
-
-            <TextView
-                android:id="@+id/title_penetasan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Penetasan"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/date_penetasan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="23 Oktober 2025"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@id/title_penetasan"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/title_penetasan" />
-
-            <TextView
-                android:id="@+id/desc_penetasan"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Telur dipindahkan ke wadah penetasan"
-                android:textColor="@color/gray_dark"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_penetasan" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_pembesaran"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="0dp"
-        app:cardBackgroundColor="@color/gray_light"
-        app:layout_constraintEnd_toEndOf="@id/card_penetasan"
-        app:layout_constraintStart_toStartOf="@id/card_penetasan"
-        app:layout_constraintTop_toBottomOf="@id/card_penetasan">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_padding_16">
-
-            <TextView
-                android:id="@+id/title_pembesaran"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pembesaran"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/date_pembesaran"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="23 Oktober 2025"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@id/title_pembesaran"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/title_pembesaran" />
-
-            <TextView
-                android:id="@+id/desc_pembesaran"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Telur menetas dipindahkan ke wadah pembesaran"
-                android:textColor="@color/gray_dark"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@id/arrow_icon"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_pembesaran" />
-
-            <ImageView
-                android:id="@+id/arrow_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@drawable/rounded_rectangle_bg"
-                android:src="@drawable/ic_arrow_right"
-                android:padding="4dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <ImageView
-        android:id="@+id/circle_top"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="24dp"
-        android:src="@drawable/timeline_circle_connector"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/card_penetasan" />
-
-    <ImageView
-        android:id="@+id/circle_bottom"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="24dp"
-        android:src="@drawable/timeline_circle_connector"
-        app:layout_constraintStart_toStartOf="@id/circle_top"
-        app:layout_constraintTop_toTopOf="@id/card_pembesaran" />
-
-    <View
-        android:id="@+id/line_connector"
-        android:layout_width="4dp"
         android:layout_height="0dp"
-        android:background="#69A283"
-        app:layout_constraintBottom_toTopOf="@id/circle_bottom"
-        app:layout_constraintEnd_toEndOf="@id/circle_top"
-        app:layout_constraintStart_toStartOf="@id/circle_top"
-        app:layout_constraintTop_toBottomOf="@id/circle_top" />
+        android:layout_marginStart="@dimen/dimen_margin_16"
+        android:layout_marginEnd="@dimen/dimen_margin_16"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topAppBar"
+        tools:listitem="@layout/item_card_detail_siklus" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
