@@ -10,7 +10,11 @@
         android:name="com.codelabs.wegot.ui.pencatatan_history.PencatatanHistoryFragment"
         android:label="@string/title_pencatatan_history"
         tools:layout="@layout/fragment_pencatatan_history"
-    />
+    >
+        <action
+            android:id="@+id/action_navigation_pencatatan_history_to_tambahRiwayatActivity"
+            app:destination="@id/tambahRiwayatActivity" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_prediksi"
@@ -23,13 +27,6 @@
             app:destination="@id/navigation_tambah_siklus" />
     </fragment>
 
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.codelabs.wegot.ui.notifications.NotificationsFragment"
-        android:label="@string/title_chatbot"
-        tools:layout="@layout/activity_notifications"
-    />
-
     <activity
         android:id="@+id/navigation_tambah_siklus"
         android:name="com.codelabs.wegot.ui.prediksi.tambah_siklus.TambahSiklusActivity"
@@ -41,6 +38,11 @@
         android:name="com.codelabs.wegot.ui.chatbot.ChatbotActivity"
         android:label="activity_chatbot"
         tools:layout="@layout/activity_chatbot" />
+    <activity
+        android:id="@+id/tambahRiwayatActivity"
+        android:name="com.codelabs.wegot.ui.pencatatan_history.tambah_riwayat.TambahRiwayatActivity"
+        android:label="activity_tambah_riwayat"
+        tools:layout="@layout/activity_tambah_riwayat" />
 
 
 </navigation>

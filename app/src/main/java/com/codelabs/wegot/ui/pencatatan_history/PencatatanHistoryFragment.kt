@@ -1,15 +1,19 @@
 package com.codelabs.wegot.ui.pencatatan_history
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.codelabs.wegot.R
 import com.codelabs.wegot.databinding.FragmentPencatatanHistoryBinding
 import com.codelabs.wegot.model.local.data.HistoryItem
 import com.codelabs.wegot.ui.adapter.HistoryAdapter
+import com.codelabs.wegot.ui.notifications.NotificationsActivity
 
 class PencatatanHistoryFragment : Fragment() {
 
@@ -42,6 +46,15 @@ class PencatatanHistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         loadHistoryData()
+
+        binding.fabAddPrediksi.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_pencatatan_history_to_tambahRiwayatActivity)
+        }
+
+        binding.imgNotification.setOnClickListener {
+            val intent = Intent(requireContext(), NotificationsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setupRecyclerView() {

@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:layout_marginEnd="@dimen/dimen_padding_16"
-    android:layout_marginStart="@dimen/dimen_padding_16"
+    android:padding="@dimen/dimen_padding_16"
     tools:context=".ui.chatbot.ChatbotActivity">
 
     <com.google.android.material.appbar.MaterialToolbar

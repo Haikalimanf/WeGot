@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.codelabs.wegot.R
 import com.codelabs.wegot.databinding.FragmentPrediksiBinding
+import com.codelabs.wegot.model.local.data.SiklusItem
 import com.codelabs.wegot.ui.adapter.SiklusAdapter
 import com.codelabs.wegot.ui.notifications.NotificationsActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,11 +32,11 @@ class PrediksiFragment : Fragment() {
         _binding = FragmentPrediksiBinding.inflate(inflater, container, false)
         return binding.root
     }
-//tes
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        observeViewModel()
+        loadDummyData()
 
         binding.fabAddPrediksi.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_prediksi_to_navigation_tambah_siklus)
@@ -56,11 +57,31 @@ class PrediksiFragment : Fragment() {
         }
     }
 
-    private fun observeViewModel() {
-        viewModel.carts.observe(viewLifecycleOwner) { carts ->
-            siklusAdapter.setItems(carts)
-        }
+    private fun loadDummyData() {
+        val dummy = listOf(
+            SiklusItem(
+                title = "Siklus 1",
+                label = "Prediksi Hasil Panen",
+                result = "25 kg",
+                date = "Estimasi Tanggal Panen : 24 Oktober 2025"
+            ),
+            SiklusItem(
+                title = "Siklus 2",
+                label = "Prediksi Hasil Panen",
+                result = "18 kg",
+                date = "Estimasi Tanggal Panen : 10 November 2025"
+            ),
+            SiklusItem(
+                title = "Siklus 3",
+                label = "Prediksi Hasil Panen",
+                result = "30 kg",
+                date = "Estimasi Tanggal Panen : 02 Desember 2025"
+            )
+        )
+        siklusAdapter.setItems(dummy)
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

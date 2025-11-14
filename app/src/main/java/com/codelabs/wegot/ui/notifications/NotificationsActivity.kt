@@ -34,28 +34,22 @@ class NotificationsActivity : AppCompatActivity() {
 
         val dummyData = listOf(
             NotificationItem(
-                "🐛",
-                "Kondisi Maggot Stabil",
-                "Populasi maggot pada wadah 3 dalam kondisi baik dan aktif makan.",
+                "⚠️",
+                "Hari Ini Belum Ada Jadwal Aktif",
+                "Silakan buat jadwal pencacahan untuk slot siang sebelum jam operasional berakhir.",
                 "5 menit yang lalu"
             ),
             NotificationItem(
                 "⚠️",
-                "Peringatan Suhu Tinggi",
-                "Suhu kandang mencapai 34°C. Disarankan menambahkan semprotan air agar tetap lembap.",
+                "Prediksi Siap!",
+                "Dari telur 500 g & sampah 60,00 kg, estimasi hasil 1.800 g. Simpan ke riwayat atau buat jadwal.",
                 "20 menit yang lalu"
             ),
             NotificationItem(
                 "♻️",
-                "Sampah Baru Tersedia",
-                "Terdeteksi 2 kg sampah organik baru pada tempat sampah dapur.",
+                "Saatnya panen",
+                "Kandang 2 dan 1 sudah saatnya untuk panen hasil maggot",
                 "1 jam yang lalu"
-            ),
-            NotificationItem(
-                "📅",
-                "Jadwal Pencacahan Hari Ini",
-                "Jangan lupa melakukan pencacahan sampah untuk slot siang sebelum jam 15.00.",
-                "3 jam yang lalu"
             ),
         )
 

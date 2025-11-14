@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.codelabs.wegot.databinding.ItemCardPrediksiSiklusBinding
-import com.codelabs.wegot.model.remote.response.prediksi.CartsItem
+import com.codelabs.wegot.model.local.data.SiklusItem
 
 class SiklusAdapter : RecyclerView.Adapter<SiklusAdapter.ViewHolder>() {
-    private val items = mutableListOf<CartsItem>()
+    private val items = mutableListOf<SiklusItem>()
 
-    fun setItems(newItems: List<CartsItem>) {
+    fun setItems(newItems: List<SiklusItem>) {
         items.clear()
         items.addAll(newItems)
         notifyDataSetChanged()
@@ -17,8 +17,11 @@ class SiklusAdapter : RecyclerView.Adapter<SiklusAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemCardPrediksiSiklusBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: CartsItem) {
-            binding.tvResultPrediksiTotal.text = item.id.toString()
+        fun bind(item: SiklusItem) {
+            binding.appCompatTextView4.text = item.title
+            binding.tvEstimasiPanen.text = item.label
+            binding.tvResultPrediksiTotal.text = item.result
+            binding.tvEstimasiTanggal.text = item.date
         }
     }
 
@@ -37,3 +40,4 @@ class SiklusAdapter : RecyclerView.Adapter<SiklusAdapter.ViewHolder>() {
 
     override fun getItemCount() = items.size
 }
+

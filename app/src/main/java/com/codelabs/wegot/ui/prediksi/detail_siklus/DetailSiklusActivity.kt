@@ -38,12 +38,7 @@ class DetailSiklusActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_detail_siklus)
 
-        val mainView = findViewById<View>(R.id.main)
-        ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        supportActionBar?.hide()
         toolbar = findViewById(R.id.topAppBar)
         tambahFaseLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
