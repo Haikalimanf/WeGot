@@ -40,7 +40,7 @@
             android:layout_height="64dp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_logo_chatbot"
-            android:tint="@color/green_dark" />
+            app:tint="@color/green_dark" />
     </LinearLayout>
 
 
@@ -117,6 +117,21 @@
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChat"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:overScrollMode="ifContentScrolls"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/topAppBar"
+        app:layout_constraintBottom_toTopOf="@id/chatContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/item_chat_received" />
 
 
     <com.google.android.material.card.MaterialCardView

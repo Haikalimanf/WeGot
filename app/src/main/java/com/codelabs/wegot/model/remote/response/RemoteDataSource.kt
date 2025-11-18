@@ -1,8 +1,10 @@
 package com.codelabs.wegot.model.remote.response
 
 import android.util.Log
+import com.codelabs.wegot.model.remote.body.ChatBody
 import com.codelabs.wegot.model.remote.body.LoginRequest
 import com.codelabs.wegot.model.remote.body.RegisterRequest
+import com.codelabs.wegot.model.remote.network.ChatbotApiService
 import com.codelabs.wegot.model.remote.network.MainApiService
 import com.codelabs.wegot.model.remote.response.auth.login.LoginResponse
 import javax.inject.Inject
@@ -11,6 +13,7 @@ import javax.inject.Singleton
 @Singleton
 class RemoteDataSource @Inject constructor(
     private val mainApiService: MainApiService,
+    private val chatbotApiService: ChatbotApiService
 ) {
     suspend fun loginAccount(username: String, password: String): LoginResponse =
         mainApiService.login(LoginRequest(username, password))
@@ -27,12 +30,11 @@ class RemoteDataSource @Inject constructor(
         )
     )
 
-//    suspend fun getChatbotResponse(
-//        chatbody: ChatBody
-//    ) = apiService.getChatResponse(
-//        chatbody = chatbody
-//    )
-
+    suspend fun getChatbotResponse(
+        chatbody: ChatBody
+    ) = chatbotApiService.getChatResponse(
+        chatbody
+    )
 
 
 }

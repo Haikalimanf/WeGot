@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ChatBody(
-    val prompt: String,
+    val question: String,
 )

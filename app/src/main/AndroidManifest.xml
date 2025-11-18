@@ -35,7 +35,8 @@
         <activity
             android:name=".ui.chatbot.ChatbotActivity"
             android:exported="false"
-            android:theme="@style/Theme.WeGot" />
+            android:theme="@style/Theme.WeGot"
+            />
         <activity
             android:name=".ui.pencatatan_history.tambah_riwayat.TambahRiwayatActivity"
             android:exported="false"
