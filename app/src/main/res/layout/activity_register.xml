@@ -94,22 +94,23 @@
                 android:layout_marginTop="@dimen/dimen_margin_12"
                 />
 
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/edtPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Masukkan Kata Sandi"
                 android:layout_marginTop="4dp"
-                android:elevation="0dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:boxCornerRadiusTopStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxStrokeColor="@color/gray"
-                android:textColorHint="@color/gray"
                 app:boxStrokeWidth="0.2dp"
-                >
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_eye_visibility_off"
+                app:endIconContentDescription="Show password">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputPassword"
@@ -117,6 +118,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
+
+
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
@@ -142,13 +145,16 @@
                 app:boxStrokeColor="@color/gray"
                 android:textColorHint="@color/gray"
                 app:boxStrokeWidth="0.2dp"
+                app:endIconMode="dropdown_menu"
                 >
 
-                <com.google.android.material.textfield.TextInputEditText
+                <AutoCompleteTextView
                     android:id="@+id/inputNomorRW"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:layout_height="50dp"
+                    android:paddingVertical="8dp"
+                    android:paddingHorizontal="12dp"
+                    android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton

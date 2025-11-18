@@ -7,6 +7,7 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
+import android.text.method.PasswordTransformationMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.Toast
@@ -15,19 +16,27 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.codelabs.wegot.R
 import com.codelabs.wegot.databinding.ActivityLoginBinding
+import com.codelabs.wegot.model.local.data.UserPreferences
 import com.codelabs.wegot.model.remote.network.ApiResponse
 import com.codelabs.wegot.ui.MainActivity
 import com.codelabs.wegot.ui.auth.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.getValue
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var userPreferences: UserPreferences
     private lateinit var binding : ActivityLoginBinding
     private val loginViewModel: LoginViewModel by viewModels()
+    private var isPasswordVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +46,21 @@ class LoginActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         setTextToLogin()
+        setupPasswordToggle()
+        isAlreadyLoggedIn()
         setupClickListeners()
         observeViewModel()
+    }
+
+    private fun isAlreadyLoggedIn() {
+        lifecycleScope.launch {
+            val token = userPreferences.getAuthToken().firstOrNull()
+            if (!token.isNullOrEmpty()) {
+                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                finish()
+                return@launch
+            }
+        }
     }
 
     private fun observeViewModel() {
@@ -100,6 +122,23 @@ class LoginActivity : AppCompatActivity() {
             binding.tvAlreadyAccount.text = spannable
             binding.tvAlreadyAccount.movementMethod = LinkMovementMethod.getInstance()
             binding.tvAlreadyAccount.highlightColor = Color.TRANSPARENT
+        }
+    }
+
+    private fun setupPasswordToggle() {
+        binding.inputPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+        binding.edtPassword.setEndIconOnClickListener {
+            isPasswordVisible = !isPasswordVisible
+            if (isPasswordVisible) {
+                binding.inputPassword.transformationMethod = null
+                binding.edtPassword.setEndIconDrawable(R.drawable.ic_eye_visibility)
+                binding.edtPassword.endIconContentDescription = "Hide password"
+            } else {
+                binding.inputPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+                binding.edtPassword.setEndIconDrawable(R.drawable.ic_eye_visibility_off)
+                binding.edtPassword.endIconContentDescription = "Show password"
+            }
+            binding.inputPassword.setSelection(binding.inputPassword.text?.length ?: 0)
         }
     }
 

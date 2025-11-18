@@ -145,7 +145,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvMediaTelur"
-        app:endIconMode="dropdown_menu">
+        app:endIconMode="dropdown_menu"
+        >
 
         <AutoCompleteTextView
             android:id="@+id/inputMediaTelur"

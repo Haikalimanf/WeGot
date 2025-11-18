@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 // Impor R dari package aplikasi Anda
 import com.codelabs.wegot.R
+import com.codelabs.wegot.databinding.ActivityNotificationsBinding
+import com.codelabs.wegot.databinding.ActivityRegisterBinding
 import com.codelabs.wegot.ui.MainActivity
 import com.google.android.material.appbar.MaterialToolbar
 
 class NotificationsActivity : AppCompatActivity() {
 
     private lateinit var toolbar: MaterialToolbar
+    private lateinit var binding: ActivityNotificationsBinding
 
     data class NotificationItem(
         val icon: String,
@@ -29,8 +32,10 @@ class NotificationsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_notifications)
+        binding = ActivityNotificationsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerNotifications)
+        supportActionBar?.hide()
 
         val dummyData = listOf(
             NotificationItem(

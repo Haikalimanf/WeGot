@@ -1,5 +1,8 @@
 package com.codelabs.wegot.model.remote.network
 
+import com.codelabs.wegot.model.local.data.UserPreferences
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -8,13 +11,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiConfig {
     companion object {
-        fun getMainApiService(): MainApiService {
+        fun getMainApiService(userPreferences: UserPreferences): MainApiService {
             val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
             val authInterceptor = Interceptor { chain ->
                 val original = chain.request()
+                val token = runBlocking { userPreferences.getAuthToken().firstOrNull().orEmpty() }
+
                 val requestBuilder = original.newBuilder()
                     .addHeader("Content-Type", "application/json")
+                if (token.isNotEmpty()) {
+                    requestBuilder.addHeader("Authorization", "Bearer $token")
+                }
 
                 val request = requestBuilder.build()
                 chain.proceed(request)

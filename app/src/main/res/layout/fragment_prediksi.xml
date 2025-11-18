@@ -20,6 +20,25 @@
         android:id="@+id/img_notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/bg_circle_notification"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvCek"
+        app:layout_constraintEnd_toStartOf="@+id/img_logout"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="Notification"
+            android:src="@drawable/ic_notification_actived" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/img_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/bg_circle_notification"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/tvCek"
@@ -27,11 +46,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/img_btn_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_notification_actived"
-            android:contentDescription="Notification" />
+            android:contentDescription="logout"
+            android:src="@drawable/ic_logout" />
     </FrameLayout>
 
     <TextView

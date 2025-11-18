@@ -4,20 +4,27 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.codelabs.wegot.model.local.data.UserPreferences
 import com.codelabs.wegot.model.remote.network.ApiResponse
+import com.codelabs.wegot.model.remote.response.auth.LogoutResponse
 import com.codelabs.wegot.model.remote.response.auth.login.LoginResponse
 import com.codelabs.wegot.repository.LoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.text.clear
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginRepository: LoginRepository
+    private val loginRepository: LoginRepository,
+    private val userPreferences: UserPreferences
 ) : ViewModel() {
 
     private val _loginResult = MutableLiveData<ApiResponse<LoginResponse>>()
     val loginResult: LiveData<ApiResponse<LoginResponse>> = _loginResult
+
+    private val _logoutResult = MutableLiveData<ApiResponse<LogoutResponse>>()
+    val logoutResult: LiveData<ApiResponse<LogoutResponse>> = _logoutResult
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -30,6 +37,12 @@ class LoginViewModel @Inject constructor(
                     is ApiResponse.Success -> {
                         _isLoading.value = false
                         _loginResult.value = result
+                        val token = result.data.token
+                        if (!token.isNullOrEmpty()) {
+                            viewModelScope.launch {
+                                userPreferences.saveAuthToken(token)
+                            }
+                        }
                     }
                     is ApiResponse.Error -> {
                         _isLoading.value = false
@@ -37,6 +50,12 @@ class LoginViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            userPreferences.clear()
         }
     }
 

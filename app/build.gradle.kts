@@ -83,4 +83,7 @@ dependencies {
     // Grafik - Data2viz
     implementation("com.diogobernardino:williamchart:3.10.1")
 
+    // data store
+    implementation(libs.datastore.preferences)
+
 }

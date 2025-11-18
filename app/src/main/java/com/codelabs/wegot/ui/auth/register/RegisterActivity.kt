@@ -7,28 +7,29 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
+import android.text.method.PasswordTransformationMethod
 import android.text.style.ClickableSpan
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.codelabs.wegot.R
 import com.codelabs.wegot.databinding.ActivityRegisterBinding
 import com.codelabs.wegot.model.remote.network.ApiResponse
-import com.codelabs.wegot.ui.MainActivity
 import com.codelabs.wegot.ui.auth.login.LoginActivity
-import com.codelabs.wegot.ui.auth.login.LoginViewModel
+import com.codelabs.wegot.utils.enumClass.RwNumber
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.getValue
 
 @AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
     private val loginViewModel: RegisterViewModel by viewModels()
+    private var selectedRwValue: String = ""
+    private var isPasswordVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,15 +38,45 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
+        setupRwDropdown()
+        setupPasswordToggle()
         setTextToLogin()
         setupClickListeners()
         observeViewModel()
     }
 
+    private fun setupPasswordToggle() {
+        binding.inputPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+        binding.edtPassword.setEndIconOnClickListener {
+            isPasswordVisible = !isPasswordVisible
+            if (isPasswordVisible) {
+                binding.inputPassword.transformationMethod = null
+                binding.edtPassword.setEndIconDrawable(R.drawable.ic_eye_visibility)
+                binding.edtPassword.endIconContentDescription = "Hide password"
+            } else {
+                binding.inputPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+                binding.edtPassword.setEndIconDrawable(R.drawable.ic_eye_visibility_off)
+                binding.edtPassword.endIconContentDescription = "Show password"
+            }
+            binding.inputPassword.setSelection(binding.inputPassword.text?.length ?: 0)
+        }
+    }
+
+    private fun setupRwDropdown() {
+        val rwField = binding.inputNomorRW as AutoCompleteTextView
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, RwNumber.labels())
+        rwField.setAdapter(adapter)
+
+        rwField.setOnItemClickListener { _, _, position, _ ->
+            val label = adapter.getItem(position) ?: ""
+            selectedRwValue = RwNumber.fromLabel(label)?.value ?: RwNumber.fromInput(label)?.value.orEmpty()
+        }
+    }
+
     private fun observeViewModel() {
         loginViewModel.isLoading.observe(this) { isLoading ->
             binding.btnDaftar.isEnabled = !isLoading
-            binding.btnDaftar.text = if (isLoading) "Loading..." else "Masuk"
+            binding.btnDaftar.text = if (isLoading) "Loading..." else "Daftar"
         }
 
         loginViewModel.registerResult.observe(this) { result ->
@@ -58,9 +89,7 @@ class RegisterActivity : AppCompatActivity() {
                 is ApiResponse.Error -> {
                     Toast.makeText(this, result.errorMessage, Toast.LENGTH_SHORT).show()
                 }
-                is ApiResponse.Empty -> {
-                    // Loading state handled above
-                }
+                is ApiResponse.Empty -> { }
             }
         }
     }
@@ -69,10 +98,24 @@ class RegisterActivity : AppCompatActivity() {
         binding.btnDaftar.setOnClickListener {
             val username = binding.inputUsername.text.toString().trim()
             val password = binding.inputPassword.text.toString().trim()
-            val rw = binding.inputNomorRW.text.toString().trim()
+            val rwInput = binding.inputNomorRW.text.toString().trim()
 
-            if (validateInput(username, password, rw)) {
-                loginViewModel.register(username, password, rw)
+            val rwValue = when {
+                selectedRwValue.isNotEmpty() -> selectedRwValue
+                RwNumber.fromInput(rwInput) != null -> RwNumber.fromInput(rwInput)!!.value
+                else -> {
+                    val digits = rwInput.replace(Regex("\\D+"), "")
+                    if (digits.isNotEmpty()) {
+                        val num = digits.toIntOrNull() ?: 0
+                        if (num in 1..9) "RW0$num" else "RW$num"
+                    } else {
+                        ""
+                    }
+                }
+            }
+
+            if (validateInput(username, password, rwValue)) {
+                loginViewModel.register(username, password, rwValue)
             }
         }
     }
@@ -86,7 +129,6 @@ class RegisterActivity : AppCompatActivity() {
         val spannable = SpannableString(fullText)
         val clickable = object : ClickableSpan() {
             override fun onClick(widget: View) {
-                // navigate to LoginActivity
                 startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
                 finish()
             }
@@ -117,7 +159,7 @@ class RegisterActivity : AppCompatActivity() {
                 false
             }
             rw.isEmpty() -> {
-                binding.edtRukunWarga.error = "Password tidak boleh kosong"
+                binding.edtRukunWarga.error = "RW tidak boleh kosong"
                 false
             }
             else -> true

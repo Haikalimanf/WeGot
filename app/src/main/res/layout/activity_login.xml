@@ -101,15 +101,19 @@
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxStrokeColor="@color/gray"
-                app:boxStrokeWidth="1dp">
+                app:boxStrokeWidth="1dp"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_eye_visibility_off"
+                app:endIconContentDescription="Show password">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />
-
             </com.google.android.material.textfield.TextInputLayout>
+
+
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnMasuk"
