@@ -22,10 +22,15 @@ import com.codelabs.wegot.ui.adapter.SiklusAdapter
 import com.codelabs.wegot.ui.auth.login.LoginActivity
 import com.codelabs.wegot.ui.auth.login.LoginViewModel
 import com.codelabs.wegot.ui.notifications.NotificationsActivity
+import com.codelabs.wegot.ui.prediksi.detail_siklus.DetailSiklusActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlin.or
 import kotlin.text.toInt
+import kotlin.toString
 
 @AndroidEntryPoint
 class PrediksiFragment : Fragment() {
@@ -34,7 +39,7 @@ class PrediksiFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: PrediksiViewModel by viewModels()
     private val loginViewModel: LoginViewModel by viewModels()
-    private val siklusAdapter = SiklusAdapter()
+    private var siklusAdapter = SiklusAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,11 +55,61 @@ class PrediksiFragment : Fragment() {
         setupRecyclerView()
 
 
-        loadDummyData()
+        loadSiklusData()
+        observeSiklusData()
         setupClickListeners()
         setupLogout()
         observeLogout()
     }
+
+    private fun loadSiklusData() {
+        viewModel.getSiklus()
+    }
+
+    private fun observeSiklusData() {
+        viewModel.siklusData.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is ApiResponse.Empty -> {
+                    binding.rvPrediksiSiklus.visibility = View.VISIBLE
+                }
+                is ApiResponse.Success -> {
+                    val siklusItems = response.data.data.map { dataItem ->
+                        SiklusItem(
+                            title = "Siklus ${dataItem.id}",
+                            label = "Prediksi Hasil Panen",
+                            result = "0 kg",
+                            date = "Tanggal Mulai: ${formatDate(dataItem.tanggalMulai)}"
+                        )
+                    }
+
+                    siklusAdapter.setItems(siklusItems, response.data.data)
+                    binding.rvPrediksiSiklus.visibility = View.VISIBLE
+                }
+                is ApiResponse.Error -> {
+                    Toast.makeText(requireContext(), response.errorMessage, Toast.LENGTH_SHORT).show()
+                    binding.rvPrediksiSiklus.visibility = View.VISIBLE
+                }
+            }
+        }
+    }
+
+    private fun formatDate(dateString: String): String {
+        return try {
+            val inputFormat = if (dateString.contains("T")) {
+                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+            } else {
+                SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            }
+
+            val outputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val date = inputFormat.parse(dateString)
+            outputFormat.format(date ?: Date())
+        } catch (e: Exception) {
+            dateString
+        }
+    }
+
+
 
     private fun observeLogout() {
         loginViewModel.logoutResult.observe(viewLifecycleOwner) { res ->
@@ -126,35 +181,47 @@ class PrediksiFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
+        siklusAdapter = SiklusAdapter { dataItem ->
+            // Handle click pada item siklus
+            val intent = Intent(requireContext(), DetailSiklusActivity::class.java).apply {
+                putExtra("EXTRA_TANGGAL", formatDate(dataItem.tanggalMulai))
+                putExtra("EXTRA_JUMLAH", dataItem.jumlahTelur.toString())
+                putExtra("EXTRA_MEDIA", dataItem.mediaTelur)
+                putExtra("EXTRA_CATATAN", dataItem.catatan)
+                putExtra("EXTRA_ID", dataItem.id)
+            }
+            startActivity(intent)
+        }
+
         binding.rvPrediksiSiklus.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = siklusAdapter
         }
     }
 
-    private fun loadDummyData() {
-        val dummy = listOf(
-            SiklusItem(
-                title = "Siklus 1",
-                label = "Prediksi Hasil Panen",
-                result = "25 kg",
-                date = "Estimasi Tanggal Panen : 24 Oktober 2025"
-            ),
-            SiklusItem(
-                title = "Siklus 2",
-                label = "Prediksi Hasil Panen",
-                result = "18 kg",
-                date = "Estimasi Tanggal Panen : 10 November 2025"
-            ),
-            SiklusItem(
-                title = "Siklus 3",
-                label = "Prediksi Hasil Panen",
-                result = "30 kg",
-                date = "Estimasi Tanggal Panen : 02 Desember 2025"
-            )
-        )
-        siklusAdapter.setItems(dummy)
-    }
+//    private fun loadDummyData() {
+//        val dummy = listOf(
+//            SiklusItem(
+//                title = "Siklus 1",
+//                label = "Prediksi Hasil Panen",
+//                result = "25 kg",
+//                date = "Estimasi Tanggal Panen : 24 Oktober 2025"
+//            ),
+//            SiklusItem(
+//                title = "Siklus 2",
+//                label = "Prediksi Hasil Panen",
+//                result = "18 kg",
+//                date = "Estimasi Tanggal Panen : 10 November 2025"
+//            ),
+//            SiklusItem(
+//                title = "Siklus 3",
+//                label = "Prediksi Hasil Panen",
+//                result = "30 kg",
+//                date = "Estimasi Tanggal Panen : 02 Desember 2025"
+//            )
+//        )
+//        siklusAdapter.setItems(dummy)
+//    }
 
 
 

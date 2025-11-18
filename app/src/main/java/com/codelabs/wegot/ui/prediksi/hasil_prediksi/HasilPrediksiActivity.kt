@@ -1,31 +1,45 @@
 package com.codelabs.wegot.ui.prediksi.hasil_prediksi
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.codelabs.wegot.R
-import com.codelabs.wegot.ui.MainActivity
-import com.google.android.material.appbar.MaterialToolbar
+import com.codelabs.wegot.databinding.ActivityHasilPrediksiBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HasilPrediksiActivity : AppCompatActivity() {
 
-    private lateinit var toolbar: MaterialToolbar
+    private lateinit var binding: ActivityHasilPrediksiBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_hasil_prediksi)
+        binding = ActivityHasilPrediksiBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar?.hide()
 
-        toolbar = findViewById(R.id.topAppBar)
-        toolbar.setNavigationOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(intent)
+        setupToolbar()
+        displayHasilPrediksi()
+    }
+
+    private fun setupToolbar() {
+        binding.topAppBar.setNavigationOnClickListener {
             finish()
         }
     }
+
+    private fun displayHasilPrediksi() {
+        val faseId = intent.getIntExtra("FASE_ID", -1)
+        val prediksiPanen = intent.getStringExtra("PREDIKSI_PANEN") ?: "0"
+        val hasilKg = intent.getStringExtra("HASIL_KG") ?: "0"
+
+        val hasilPrediksi = if (hasilKg != "null" && hasilKg.isNotEmpty() && hasilKg != "0") {
+            "$hasilKg KG"
+        } else if (prediksiPanen != "null" && prediksiPanen.isNotEmpty()) {
+            "$prediksiPanen KG"
+        } else {
+            "Belum tersedia"
+        }
+
+        binding.cardHasilPanen.tvPredictionResult.text = hasilPrediksi
+    }
+
 }

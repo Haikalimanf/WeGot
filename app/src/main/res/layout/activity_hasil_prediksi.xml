@@ -22,7 +22,8 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <include
-        layout="@layout/item_card_prediksi_siklus"
+        android:id="@+id/cardHasilPanen"
+        layout="@layout/item_card_hasil_panen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"

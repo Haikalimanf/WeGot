@@ -3,51 +3,127 @@ package com.codelabs.wegot.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.codelabs.wegot.R
-import com.codelabs.wegot.ui.prediksi.detail_siklus.SiklusItem
+import com.codelabs.wegot.databinding.ItemCardDetailSiklusBinding
+import com.codelabs.wegot.model.remote.response.prediksi.DataGetFase
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 class DetailSiklusAdapter(
-    private val items: List<SiklusItem>,
-    private val onFaseClick: (SiklusItem) -> Unit
-) : RecyclerView.Adapter<DetailSiklusAdapter.SiklusViewHolder>() {
+    private val onFaseClick: (DataGetFase) -> Unit = {},
+    private val onEmptyFaseClick: (String) -> Unit = {}
+) : RecyclerView.Adapter<DetailSiklusAdapter.ViewHolder>() {
 
-    inner class SiklusViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val title: TextView = view.findViewById(R.id.tvTitle)
-        val date: TextView = view.findViewById(R.id.tvDate)
-        val description: TextView = view.findViewById(R.id.tvDesc)
-        val arrowIcon: ImageView = view.findViewById(R.id.arrow_icon)
-        val lineConnector: View = view.findViewById(R.id.line_connector)
-    }
+    private val faseList = mutableListOf<DataGetFase>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SiklusViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_card_detail_siklus, parent, false)
-        return SiklusViewHolder(view)
-    }
+    data class FaseItem(
+        val data: DataGetFase? = null,
+        val jeniFase: String,
+        val isEmpty: Boolean = false
+    )
 
-    override fun onBindViewHolder(holder: SiklusViewHolder, position: Int) {
-        val item = items[position]
+    private val displayList = mutableListOf<FaseItem>()
 
-        holder.title.text = item.title
-        holder.date.text = item.date
-        holder.description.text = item.description
-        holder.arrowIcon.visibility = if (item.isClickable) View.VISIBLE else View.GONE
+    fun setItems(newItems: List<DataGetFase>) {
+        faseList.clear()
+        faseList.addAll(newItems)
 
-        if (position == items.size - 1) {
-            holder.lineConnector.visibility = View.GONE
-        } else {
-            holder.lineConnector.visibility = View.VISIBLE
+        // Daftar fase yang harus ditampilkan
+        val requiredFases = listOf("PENETASAN", "PEMBESARAN", "PANEN")
+        displayList.clear()
+
+        requiredFases.forEach { requiredFase ->
+            val existingFase = faseList.find { it.jenis.uppercase() == requiredFase }
+            if (existingFase != null) {
+                displayList.add(FaseItem(data = existingFase, jeniFase = requiredFase, isEmpty = false))
+            } else {
+                // Tambahkan fase kosong
+                displayList.add(FaseItem(data = null, jeniFase = requiredFase, isEmpty = true))
+            }
         }
 
-        holder.itemView.setOnClickListener {
-            if (item.isClickable) {
-                onFaseClick(item)
+        notifyDataSetChanged()
+    }
+
+    inner class ViewHolder(private val binding: ItemCardDetailSiklusBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(item: FaseItem, position: Int) {
+            if (item.isEmpty) {
+                // Tampilkan data untuk fase kosong
+                binding.tvTitle.text = item.jeniFase
+                binding.tvDate.text = "Belum diatur"
+                binding.tvDesc.text = "Klik untuk menambah data ${item.jeniFase.lowercase()}"
+                binding.tvDesc.setTextColor(binding.root.context.getColor(android.R.color.darker_gray))
+
+                // Show arrow icon untuk fase kosong (kecuali PENETASAN yang sudah otomatis)
+                if (item.jeniFase != "PENETASAN") {
+                    binding.arrowIcon.visibility = View.VISIBLE
+                    binding.arrowIcon.setOnClickListener {
+                        onEmptyFaseClick(item.jeniFase)
+                    }
+                } else {
+                    binding.arrowIcon.visibility = View.GONE
+                }
+            } else {
+                // Tampilkan data normal
+                val faseData = item.data!!
+                binding.tvTitle.text = faseData.jenis
+                binding.tvDate.text = formatDate(faseData.tanggal)
+                binding.tvDesc.text = faseData.keterangan
+                binding.tvDesc.setTextColor(binding.root.context.getColor(android.R.color.black))
+
+                // Show arrow icon untuk PANEN dan PEMBESARAN yang sudah ada data
+                if (faseData.jenis.uppercase() == "PANEN" || faseData.jenis.uppercase() == "PEMBESARAN") {
+                    binding.arrowIcon.visibility = View.VISIBLE
+                    binding.arrowIcon.setOnClickListener {
+                        onFaseClick(faseData)
+                    }
+                } else {
+                    binding.arrowIcon.visibility = View.GONE
+                }
+            }
+
+            // Hide line connector for last item
+            if (position == displayList.size - 1) {
+                binding.lineConnector.visibility = View.GONE
+            } else {
+                binding.lineConnector.visibility = View.VISIBLE
+            }
+        }
+
+        private fun formatDate(dateString: String): String {
+            return try {
+                val inputFormat = if (dateString.contains("T")) {
+                    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+                } else {
+                    SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                }
+
+                val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+                val date = inputFormat.parse(dateString)
+                outputFormat.format(date ?: Date())
+            } catch (e: Exception) {
+                dateString
             }
         }
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemCardDetailSiklusBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(displayList[position], position)
+    }
+
+    override fun getItemCount() = displayList.size
 }
+
+

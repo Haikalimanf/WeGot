@@ -6,6 +6,8 @@ import com.codelabs.wegot.model.remote.network.ApiConfig
 import com.codelabs.wegot.model.remote.network.MainApiService
 import com.codelabs.wegot.model.remote.network.ChatbotApiService
 import com.codelabs.wegot.model.remote.network.FlaskApiService
+import com.codelabs.wegot.model.remote.response.RemoteDataSource
+import com.codelabs.wegot.repository.PrediksiRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,4 +39,10 @@ object AppModule {
     fun provideUserPreferences(@ApplicationContext context: Context): UserPreferences =
         UserPreferences(context)
 
+    @Provides
+    fun providePrediksiRepository(
+        remoteDataSource: RemoteDataSource,
+    ): PrediksiRepository {
+        return PrediksiRepository(remoteDataSource)
+    }
 }

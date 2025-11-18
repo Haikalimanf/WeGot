@@ -5,23 +5,39 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.codelabs.wegot.databinding.ItemCardPrediksiSiklusBinding
 import com.codelabs.wegot.model.local.data.SiklusItem
+import com.codelabs.wegot.model.remote.response.prediksi.DataItem
 
-class SiklusAdapter : RecyclerView.Adapter<SiklusAdapter.ViewHolder>() {
+class SiklusAdapter(
+    private val onItemClick: (DataItem) -> Unit = {}
+) : RecyclerView.Adapter<SiklusAdapter.ViewHolder>() {
+
     private val items = mutableListOf<SiklusItem>()
+    private val dataItems = mutableListOf<DataItem>()
 
-    fun setItems(newItems: List<SiklusItem>) {
+    fun setItems(newItems: List<SiklusItem>, newDataItems: List<DataItem>) {
         items.clear()
         items.addAll(newItems)
+        dataItems.clear()
+        dataItems.addAll(newDataItems)
         notifyDataSetChanged()
     }
 
     inner class ViewHolder(private val binding: ItemCardPrediksiSiklusBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: SiklusItem) {
+
+        fun bind(item: SiklusItem, dataItem: DataItem) {
             binding.appCompatTextView4.text = item.title
             binding.tvEstimasiPanen.text = item.label
             binding.tvResultPrediksiTotal.text = item.result
             binding.tvEstimasiTanggal.text = item.date
+
+            binding.root.setOnClickListener {
+                onItemClick(dataItem)
+            }
+
+            binding.tvSeeDetail.setOnClickListener {
+                onItemClick(dataItem)
+            }
         }
     }
 
@@ -35,9 +51,10 @@ class SiklusAdapter : RecyclerView.Adapter<SiklusAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        if (position < items.size && position < dataItems.size) {
+            holder.bind(items[position], dataItems[position])
+        }
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() = minOf(items.size, dataItems.size)
 }
-

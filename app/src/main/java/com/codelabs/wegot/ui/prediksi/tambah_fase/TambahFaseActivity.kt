@@ -1,56 +1,45 @@
 package com.codelabs.wegot.ui.prediksi.tambah_fase
 
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.codelabs.wegot.R
-import com.codelabs.wegot.ui.MainActivity
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.textfield.TextInputEditText
+import com.codelabs.wegot.databinding.ActivityTambahFaseBinding
+import com.codelabs.wegot.model.remote.network.ApiResponse
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import kotlin.toString
 
+@AndroidEntryPoint
 class TambahFaseActivity : AppCompatActivity() {
 
-    private lateinit var inputTanggal: TextInputEditText
-    private lateinit var btnSimpan: Button
-    private lateinit var toolbar: MaterialToolbar
+    private lateinit var binding: ActivityTambahFaseBinding
+    private val viewModel: TambahFaseViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_tambah_fase)
+        binding = ActivityTambahFaseBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar?.hide()
-
-        inputTanggal = findViewById(R.id.inputTanggalPembesaran)
-        btnSimpan = findViewById(R.id.btnSimpanFase)
-        toolbar = findViewById(R.id.topAppBar)
 
         setupToolbar()
         setupDatePicker()
         setupSaveButton()
+        observeAddFase()
     }
 
-    //ini agar semua data terhapus dan kembali ke home karena pake dummy crud jadi aga bingung anjay biar dinamis terus
     private fun setupToolbar() {
-        toolbar.setNavigationOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(intent)
+        binding.topAppBar.setNavigationOnClickListener {
             finish()
         }
     }
 
     private fun setupDatePicker() {
-        inputTanggal.setOnClickListener {
+        binding.inputTanggalPembesaran.setOnClickListener {
             val calendar = Calendar.getInstance()
             val datePicker = DatePickerDialog(
                 this,
@@ -58,8 +47,13 @@ class TambahFaseActivity : AppCompatActivity() {
                     val selectedDate = Calendar.getInstance()
                     selectedDate.set(year, month, day)
 
+                    // Format untuk tampilan
                     val displayFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
-                    inputTanggal.setText(displayFormat.format(selectedDate.time))
+                    binding.inputTanggalPembesaran.setText(displayFormat.format(selectedDate.time))
+
+                    // Simpan format API (yyyy-MM-dd) sebagai tag
+                    val apiFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                    binding.inputTanggalPembesaran.tag = apiFormat.format(selectedDate.time)
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -70,15 +64,65 @@ class TambahFaseActivity : AppCompatActivity() {
     }
 
     private fun setupSaveButton() {
-        btnSimpan.setOnClickListener {
-            val tanggal = inputTanggal.text.toString()
-            if (tanggal.isEmpty()) {
+        binding.btnSimpanFase.setOnClickListener {
+            val tanggalDisplay = binding.inputTanggalPembesaran.text.toString()
+            val tanggal = binding.inputTanggalPembesaran.tag?.toString() ?: ""
+            val jumlahMakanan = binding.inputJumlahMakanan.text.toString()
+            val catatan = binding.inputKeterangan.text.toString()
+
+            if (tanggalDisplay.isEmpty()) {
                 Toast.makeText(this, "Harap isi tanggal pembesaran", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (jumlahMakanan.isEmpty()) {
+                Toast.makeText(this, "Harap isi jumlah makanan", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val mode = intent.getStringExtra("MODE") ?: "ADD"
+            val siklusId = intent.getIntExtra("SIKLUS_ID", -1)
+
+            if (mode == "ADD" && siklusId != -1) {
+                try {
+                    val jumlah = jumlahMakanan.toInt()
+
+                    // Gunakan method baru yang menambah kedua fase
+                    viewModel.addFasePembesaranWithPanen(
+                        siklusId = siklusId,
+                        tanggalPembesaran = tanggal,
+                        jumlahMakanan = jumlah,
+                        catatan = catatan
+                    )
+                } catch (e: NumberFormatException) {
+                    Toast.makeText(this, "Jumlah makanan harus berupa angka", Toast.LENGTH_SHORT).show()
+                }
             } else {
-                val resultIntent = Intent()
-                resultIntent.putExtra("EXTRA_TANGGAL_PEMBESARAN", tanggal)
-                setResult(RESULT_OK, resultIntent)
-                finish()
+                Toast.makeText(this, "Data tidak valid", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun observeAddFase() {
+        viewModel.addFaseResult.observe(this) { response ->
+            when (response) {
+                is ApiResponse.Empty -> {
+                    binding.btnSimpanFase.isEnabled = false
+                    binding.btnSimpanFase.text = "Menyimpan..."
+                }
+                is ApiResponse.Success -> {
+                    binding.btnSimpanFase.isEnabled = true
+                    binding.btnSimpanFase.text = "Simpan Fase"
+                    Toast.makeText(this, "Fase berhasil ditambahkan", Toast.LENGTH_SHORT).show()
+
+                    setResult(RESULT_OK)
+                    finish()
+                }
+                is ApiResponse.Error -> {
+                    binding.btnSimpanFase.isEnabled = true
+                    binding.btnSimpanFase.text = "Simpan Fase"
+                    Toast.makeText(this, response.errorMessage, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
