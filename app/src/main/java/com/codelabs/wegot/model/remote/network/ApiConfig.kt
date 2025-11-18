@@ -8,14 +8,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiConfig {
     companion object {
-        fun getApiService(): ApiService {
+        fun getMainApiService(): MainApiService {
             val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
             val authInterceptor = Interceptor { chain ->
-                val req = chain.request()
-                val requestHeaders = req.newBuilder()
-                    .build()
-                chain.proceed(requestHeaders)
+                val original = chain.request()
+                val requestBuilder = original.newBuilder()
+                    .addHeader("Content-Type", "application/json")
+
+                val request = requestBuilder.build()
+                chain.proceed(request)
             }
 
             val client = OkHttpClient.Builder()
@@ -24,13 +26,38 @@ class ApiConfig {
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://dummyjson.com/")
+                .baseUrl("https://api.smartmaggot.my.id/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
 
-            return retrofit.create(ApiService::class.java)
+            return retrofit.create(MainApiService::class.java)
         }
+
+
+        fun getChatbotApiService(): ChatbotApiService {
+            val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://chatbot.smartmaggot.my.id/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+            return retrofit.create(ChatbotApiService::class.java)
+        }
+
+        fun getFlaskApiService(): FlaskApiService {
+            val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://flaskapi.smartmaggot.my.id/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+            return retrofit.create(FlaskApiService::class.java)
+        }
+
+
     }
 
 }

@@ -47,7 +47,7 @@ class PrediksiFragment : Fragment() {
             startActivity(intent)
         }
 
-        viewModel.getCarts()
+//        viewModel.getCarts()
     }
 
     private fun setupRecyclerView() {

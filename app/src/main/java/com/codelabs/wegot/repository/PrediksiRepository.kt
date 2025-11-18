@@ -8,7 +8,7 @@ import javax.inject.Inject
 class PrediksiRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
 ) {
-    suspend fun getCarts(skip: Int, limit: Int): PrediksiResponse {
-        return remoteDataSource.getCartsPaging(skip, limit)
-    }
+//    suspend fun getCarts(skip: Int, limit: Int): PrediksiResponse {
+//        return remoteDataSource.getCartsPaging(skip, limit)
+//    }
 }

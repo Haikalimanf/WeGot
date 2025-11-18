@@ -1,7 +1,9 @@
 package com.codelabs.wegot.di
 
 import com.codelabs.wegot.model.remote.network.ApiConfig
-import com.codelabs.wegot.model.remote.network.ApiService
+import com.codelabs.wegot.model.remote.network.MainApiService
+import com.codelabs.wegot.model.remote.network.ChatbotApiService
+import com.codelabs.wegot.model.remote.network.FlaskApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,9 +15,18 @@ import javax.inject.Singleton
 object AppModule {
 
     @Provides
-    @Singleton
-    fun provideApiService(): ApiService {
-        return ApiConfig.getApiService()
+    fun provideMainApiService(): MainApiService {
+        return ApiConfig.getMainApiService()
+    }
+
+    @Provides
+    fun provideChatbotApiService(): ChatbotApiService {
+        return ApiConfig.getChatbotApiService()
+    }
+
+    @Provides
+    fun provideFlaskApiService(): FlaskApiService {
+        return ApiConfig.getFlaskApiService()
     }
 
 }

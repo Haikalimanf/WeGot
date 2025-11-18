@@ -17,14 +17,14 @@ class PrediksiViewModel @Inject constructor(
     private val _carts = MutableLiveData<List<CartsItem>>()
     val carts: LiveData<List<CartsItem>> = _carts
 
-    fun getCarts() {
-        viewModelScope.launch {
-            try {
-                val response = repository.getCarts(0, 10)
-                _carts.value = response.carts
-            } catch (e: Exception) {
-                // Handle error
-            }
-        }
-    }
+//    fun getCarts() {
+//        viewModelScope.launch {
+//            try {
+//                val response = repository.getCarts(0, 10)
+//                _carts.value = response.carts
+//            } catch (e: Exception) {
+//                // Handle error
+//            }
+//        }
+//    }
 }
