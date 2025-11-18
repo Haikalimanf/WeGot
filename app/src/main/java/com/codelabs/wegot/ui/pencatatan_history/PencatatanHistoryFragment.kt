@@ -35,6 +35,7 @@ class PencatatanHistoryFragment : Fragment() {
 
     private val historyAdapter = HistoryAdapter()
     private val loginViewModel: LoginViewModel by viewModels()
+    private val viewModel: PencatatanHistoryViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -42,15 +43,11 @@ class PencatatanHistoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(PencatatanHistoryViewModel::class.java)
 
         _binding = FragmentPencatatanHistoryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            binding.txtSelamatPagi.text = it
-        }
+
 
         setupLineChart()
 
@@ -60,11 +57,25 @@ class PencatatanHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        loadHistoryData()
         setupLogout()
         observeLogout()
         setupClickListeners()
+        setupObservers()
+        viewModel.getHistoryPencacahan()
+    }
 
+    private fun setupObservers() {
+        viewModel.historyData.observe(viewLifecycleOwner) { response ->
+            historyAdapter.setItems(response.data)
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
+            Toast.makeText(requireContext(), "Error: $error", Toast.LENGTH_SHORT).show()
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            // Tambahkan loading indicator jika diperlukan
+        }
     }
 
     private fun observeLogout() {
@@ -138,21 +149,21 @@ class PencatatanHistoryFragment : Fragment() {
 
     private fun setupRecyclerView() {
         binding.rvPrediksiSiklus.apply {
-            layoutManager = LinearLayoutManager(context)
             adapter = historyAdapter
+            layoutManager = LinearLayoutManager(requireContext())
         }
     }
 
-    private fun loadHistoryData() {
-        val historyList = listOf(
-            HistoryItem("23 Oktober 2025", "100kg", "100kg"),
-            HistoryItem("24 Oktober 2025", "80kg", "80kg"),
-            HistoryItem("21 Oktober 2025", "70kg", "70kg"),
-            HistoryItem("20 Oktober 2025", "70kg", "70kg"),
-            HistoryItem("19 Oktober 2025", "70kg", "70kg")
-        )
-        historyAdapter.setItems(historyList)
-    }
+//    private fun loadHistoryData() {
+//        val historyList = listOf(
+//            HistoryItem("23 Oktober 2025", "100kg", "100kg"),
+//            HistoryItem("24 Oktober 2025", "80kg", "80kg"),
+//            HistoryItem("21 Oktober 2025", "70kg", "70kg"),
+//            HistoryItem("20 Oktober 2025", "70kg", "70kg"),
+//            HistoryItem("19 Oktober 2025", "70kg", "70kg")
+//        )
+//        historyAdapter.setItems(historyList)
+//    }
 
     private fun setupLineChart() {
         val wasteData = linkedMapOf(

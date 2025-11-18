@@ -7,9 +7,12 @@ import com.codelabs.wegot.model.remote.body.AddSiklusRequest
 import com.codelabs.wegot.model.remote.body.ChatBody
 import com.codelabs.wegot.model.remote.body.LoginRequest
 import com.codelabs.wegot.model.remote.body.RegisterRequest
+import com.codelabs.wegot.model.remote.body.addHistoryRequest
 import com.codelabs.wegot.model.remote.network.ChatbotApiService
 import com.codelabs.wegot.model.remote.network.MainApiService
 import com.codelabs.wegot.model.remote.response.auth.login.LoginResponse
+import com.codelabs.wegot.model.remote.response.hitoryPencacahan.AddHistoryPencacahanResponse
+import com.codelabs.wegot.model.remote.response.hitoryPencacahan.GetHistoryPencacahanResponse
 import com.codelabs.wegot.model.remote.response.prediksi.AddFaseResponse
 import com.codelabs.wegot.model.remote.response.prediksi.AddSiklusResponse
 import com.codelabs.wegot.model.remote.response.prediksi.GetFaseResponse
@@ -61,6 +64,20 @@ class RemoteDataSource @Inject constructor(
     ): AddFaseResponse {
         return mainApiService.addFasePembesaran(siklusId, faseData)
     }
+
+    suspend fun addHistoryPencacahan(
+        tanggalWaktu: String,
+        totalSampah: Double,
+        catatan: String
+    ): AddHistoryPencacahanResponse {
+        val request = addHistoryRequest(tanggalWaktu, totalSampah, catatan)
+        return mainApiService.addHistoryPencacahan(request)
+    }
+
+    suspend fun getHistoryPencacahan(): GetHistoryPencacahanResponse {
+        return mainApiService.getHistoryPencacahan()
+    }
+
 
     suspend fun addFasePanen(
         siklusId: Int,

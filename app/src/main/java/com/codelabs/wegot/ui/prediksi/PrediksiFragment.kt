@@ -74,10 +74,12 @@ class PrediksiFragment : Fragment() {
                 }
                 is ApiResponse.Success -> {
                     val siklusItems = response.data.data.map { dataItem ->
+//                        val hasilPrediksi = getHasilPrediksiFromSiklus(dataItem)
+
                         SiklusItem(
                             title = "Siklus ${dataItem.id}",
                             label = "Prediksi Hasil Panen",
-                            result = "0 kg",
+                            result = "3 Kg",
                             date = "Tanggal Mulai: ${formatDate(dataItem.tanggalMulai)}"
                         )
                     }

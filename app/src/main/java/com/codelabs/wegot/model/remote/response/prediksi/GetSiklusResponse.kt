@@ -12,6 +12,7 @@ data class DataItem(
 	val mediaTelur: String,
 	val id: Int,
 	val userId: Int,
-	val jumlahTelur: Int
+	val jumlahTelur: Int,
+	val prediksiPanen: Any,
 )
 

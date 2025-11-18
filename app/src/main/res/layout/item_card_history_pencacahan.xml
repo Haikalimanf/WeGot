@@ -2,7 +2,6 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="90dp"
     android:layout_marginBottom="12sp"
@@ -10,7 +9,6 @@
     android:layout_marginEnd="1dp"
     app:cardCornerRadius="8dp"
     android:elevation="4dp">
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -43,11 +41,12 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvHasilPencacahan"
-            android:layout_width="141dp"
+            android:layout_width="0dp"
             android:layout_height="21dp"
             android:text="Hasil Pencacahan : 100kg"
             android:textColor="@color/dark_green"
             android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/img_notification"
             app:layout_constraintStart_toStartOf="@+id/tvJumlahVolumeSampah"
             app:layout_constraintTop_toBottomOf="@+id/tvJumlahVolumeSampah" />
 

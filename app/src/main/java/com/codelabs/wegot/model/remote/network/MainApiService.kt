@@ -6,10 +6,13 @@ import com.codelabs.wegot.model.remote.body.AddSiklusRequest
 import com.codelabs.wegot.model.remote.body.ChatBody
 import com.codelabs.wegot.model.remote.body.LoginRequest
 import com.codelabs.wegot.model.remote.body.RegisterRequest
+import com.codelabs.wegot.model.remote.body.addHistoryRequest
 import com.codelabs.wegot.model.remote.response.auth.LogoutResponse
 import com.codelabs.wegot.model.remote.response.auth.login.LoginResponse
 import com.codelabs.wegot.model.remote.response.auth.register.RegisterResponse
 import com.codelabs.wegot.model.remote.response.chatbot.ChatbotResponse
+import com.codelabs.wegot.model.remote.response.hitoryPencacahan.AddHistoryPencacahanResponse
+import com.codelabs.wegot.model.remote.response.hitoryPencacahan.GetHistoryPencacahanResponse
 import com.codelabs.wegot.model.remote.response.prediksi.AddFaseResponse
 import com.codelabs.wegot.model.remote.response.prediksi.AddSiklusResponse
 import com.codelabs.wegot.model.remote.response.prediksi.GetFaseResponse
@@ -65,6 +68,14 @@ interface MainApiService {
 
     @GET("api/siklus")
     suspend fun getSiklus(): GetSiklusResponse
+
+    @POST ("api/pencacahan")
+    suspend fun addHistoryPencacahan(
+        @Body historyRequest: addHistoryRequest
+    ): AddHistoryPencacahanResponse
+
+    @GET("api/pencacahan")
+    suspend fun getHistoryPencacahan(): GetHistoryPencacahanResponse
 
     @POST("api/auth/logout")
     suspend fun logout(): LogoutResponse

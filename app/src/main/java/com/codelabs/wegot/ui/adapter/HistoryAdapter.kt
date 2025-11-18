@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.codelabs.wegot.databinding.ItemCardHistoryPencacahanBinding
-import com.codelabs.wegot.model.local.data.HistoryItem
+import com.codelabs.wegot.model.remote.response.hitoryPencacahan.DataItem
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
-    private val items = mutableListOf<HistoryItem>()
+    private val items = mutableListOf<DataItem>()
 
-    fun setItems(newItems: List<HistoryItem>) {
+    fun setItems(newItems: List<DataItem>) {
         items.clear()
         items.addAll(newItems)
         notifyDataSetChanged()
@@ -17,10 +19,21 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemCardHistoryPencacahanBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: HistoryItem) {
-            binding.appCompatTextView4.text = item.date
-            binding.tvJumlahVolumeSampah.text = "Jumlah Volume Sampah : ${item.volume}"
-            binding.tvHasilPencacahan.text = "Hasil Pencacahan : ${item.result}"
+        fun bind(item: DataItem) {
+            // Format tanggal
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+
+            val formattedDate = try {
+                val date = inputFormat.parse(item.tanggalWaktu)
+                outputFormat.format(date ?: Date())
+            } catch (e: Exception) {
+                item.tanggalWaktu
+            }
+
+            binding.appCompatTextView4.text = formattedDate
+            binding.tvJumlahVolumeSampah.text = "Jumlah Volume Sampah : ${item.totalSampah} Kg"
+            binding.tvHasilPencacahan.text = "Catatan : ${item.catatan}"
         }
     }
 
