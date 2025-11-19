@@ -32,4 +32,17 @@ object DateTimeUtils {
             day
         ).show()
     }
+
+     fun getDayName(dateString: String): String {
+        return try {
+            val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+            val date = sdf.parse(dateString)
+
+            val dayFormat = SimpleDateFormat("EEE", Locale("id", "ID"))
+            dayFormat.format(date!!) // contoh: Sen, Sel, Rab
+        } catch (e: Exception) {
+            ""
+        }
+    }
+
 }

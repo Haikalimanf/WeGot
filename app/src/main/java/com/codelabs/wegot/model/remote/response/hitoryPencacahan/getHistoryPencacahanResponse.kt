@@ -6,11 +6,11 @@ data class GetHistoryPencacahanResponse(
 )
 
 data class DataItem(
-	val tanggalWaktu: String,
-	val createdAt: String,
-	val totalSampah: Any,
-	val catatan: String,
-	val id: Int,
-	val userId: Int
+	val tanggalWaktu: String? = "",
+	val createdAt: String? = "",
+	val totalSampah: Double? = 0.0,
+	val catatan: String? = "",
+	val id: Int? = 0,
+	val userId: Int? = 0
 )
 

@@ -19,10 +19,12 @@ import com.codelabs.wegot.databinding.FragmentPencatatanHistoryBinding
 import com.codelabs.wegot.model.local.data.HistoryItem
 import com.codelabs.wegot.model.local.data.UserPreferences
 import com.codelabs.wegot.model.remote.network.ApiResponse
+import com.codelabs.wegot.model.remote.response.hitoryPencacahan.DataItem
 import com.codelabs.wegot.ui.adapter.HistoryAdapter
 import com.codelabs.wegot.ui.auth.login.LoginActivity
 import com.codelabs.wegot.ui.auth.login.LoginViewModel
 import com.codelabs.wegot.ui.notifications.NotificationsActivity
+import com.codelabs.wegot.utils.DateTimeUtils.getDayName
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlin.getValue
@@ -43,14 +45,8 @@ class PencatatanHistoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentPencatatanHistoryBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-
-
-        setupLineChart()
-
         return root
     }
 
@@ -67,6 +63,13 @@ class PencatatanHistoryFragment : Fragment() {
     private fun setupObservers() {
         viewModel.historyData.observe(viewLifecycleOwner) { response ->
             historyAdapter.setItems(response.data)
+            setupLineChart(response.data.map {
+                DataItem(
+                    tanggalWaktu = it.tanggalWaktu,
+                    totalSampah = it.totalSampah
+                )
+            })
+
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
@@ -154,27 +157,29 @@ class PencatatanHistoryFragment : Fragment() {
         }
     }
 
-//    private fun loadHistoryData() {
-//        val historyList = listOf(
-//            HistoryItem("23 Oktober 2025", "100kg", "100kg"),
-//            HistoryItem("24 Oktober 2025", "80kg", "80kg"),
-//            HistoryItem("21 Oktober 2025", "70kg", "70kg"),
-//            HistoryItem("20 Oktober 2025", "70kg", "70kg"),
-//            HistoryItem("19 Oktober 2025", "70kg", "70kg")
-//        )
-//        historyAdapter.setItems(historyList)
-//    }
-
-    private fun setupLineChart() {
-        val wasteData = linkedMapOf(
-            "Sen" to 15.0f,
-            "Sel" to 20.0f,
-            "Rab" to 18.0f,
-            "Kam" to 25.0f,
-            "Jum" to 30.0f,
-            "Sab" to 28.0f,
-            "Min" to 22.0f
+    private fun mapDataToWeek(data: List<DataItem>): LinkedHashMap<String, Float> {
+        val weekMap = linkedMapOf(
+            "Sen" to 0f,
+            "Sel" to 0f,
+            "Rab" to 0f,
+            "Kam" to 0f,
+            "Jum" to 0f,
+            "Sab" to 0f,
         )
+
+        data.forEach { item ->
+            val day = getDayName(item.tanggalWaktu.toString())
+
+            if (weekMap.containsKey(day)) {
+                weekMap[day] = weekMap[day]!! + item.totalSampah!!.toFloat()
+            }
+        }
+
+        return weekMap
+    }
+
+    private fun setupLineChart(apiData: List<DataItem>) {
+        val wasteData = mapDataToWeek(apiData)
 
         binding.lineChartView.apply {
             gradientFillColors = intArrayOf(
@@ -184,6 +189,7 @@ class PencatatanHistoryFragment : Fragment() {
             animate(wasteData)
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
