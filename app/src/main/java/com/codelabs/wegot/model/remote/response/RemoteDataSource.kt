@@ -13,6 +13,7 @@ import com.codelabs.wegot.model.remote.network.MainApiService
 import com.codelabs.wegot.model.remote.response.auth.login.LoginResponse
 import com.codelabs.wegot.model.remote.response.hitoryPencacahan.AddHistoryPencacahanResponse
 import com.codelabs.wegot.model.remote.response.hitoryPencacahan.GetHistoryPencacahanResponse
+import com.codelabs.wegot.model.remote.response.notification.NotificationResponse
 import com.codelabs.wegot.model.remote.response.prediksi.AddFaseResponse
 import com.codelabs.wegot.model.remote.response.prediksi.AddSiklusResponse
 import com.codelabs.wegot.model.remote.response.prediksi.GetFaseResponse
@@ -76,6 +77,14 @@ class RemoteDataSource @Inject constructor(
 
     suspend fun getHistoryPencacahan(): GetHistoryPencacahanResponse {
         return mainApiService.getHistoryPencacahan()
+    }
+
+    suspend fun getNotification(): NotificationResponse {
+        return mainApiService.getNotifikasi()
+    }
+
+    suspend fun markAsRead(id: Int): Boolean {
+        return mainApiService.markAsRead(id).updated == 1
     }
 
 

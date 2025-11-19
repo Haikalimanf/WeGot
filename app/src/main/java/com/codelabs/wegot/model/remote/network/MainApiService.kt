@@ -13,6 +13,8 @@ import com.codelabs.wegot.model.remote.response.auth.register.RegisterResponse
 import com.codelabs.wegot.model.remote.response.chatbot.ChatbotResponse
 import com.codelabs.wegot.model.remote.response.hitoryPencacahan.AddHistoryPencacahanResponse
 import com.codelabs.wegot.model.remote.response.hitoryPencacahan.GetHistoryPencacahanResponse
+import com.codelabs.wegot.model.remote.response.notification.MarkAsReadResponse
+import com.codelabs.wegot.model.remote.response.notification.NotificationResponse
 import com.codelabs.wegot.model.remote.response.prediksi.AddFaseResponse
 import com.codelabs.wegot.model.remote.response.prediksi.AddSiklusResponse
 import com.codelabs.wegot.model.remote.response.prediksi.GetFaseResponse
@@ -23,6 +25,7 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 
@@ -79,5 +82,14 @@ interface MainApiService {
 
     @POST("api/auth/logout")
     suspend fun logout(): LogoutResponse
+
+    @GET("api/notifikasi")
+    suspend fun getNotifikasi(): NotificationResponse
+
+    @PATCH("api/notifikasi/{id}/read")
+    suspend fun markAsRead(
+        @Path("id") id: Int
+    ): MarkAsReadResponse
+
 
 }

@@ -5,76 +5,126 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
-// Import AppCompatActivity sebagai ganti Fragment
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-// Impor R dari package aplikasi Anda
 import com.codelabs.wegot.R
 import com.codelabs.wegot.databinding.ActivityNotificationsBinding
-import com.codelabs.wegot.databinding.ActivityRegisterBinding
+import com.codelabs.wegot.model.remote.response.notification.NotificationItem
 import com.codelabs.wegot.ui.MainActivity
 import com.google.android.material.appbar.MaterialToolbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NotificationsActivity : AppCompatActivity() {
 
-    private lateinit var toolbar: MaterialToolbar
     private lateinit var binding: ActivityNotificationsBinding
+    private val viewModel: NotificationViewModel by viewModels()
 
-    data class NotificationItem(
-        val icon: String,
-        val title: String,
-        val description: String,
-        val time: String
-    )
+    private lateinit var notificationAdapter: NotificationAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityNotificationsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerNotifications)
         supportActionBar?.hide()
 
-        val dummyData = listOf(
-            NotificationItem(
-                "⚠️",
-                "Hari Ini Belum Ada Jadwal Aktif",
-                "Silakan buat jadwal pencacahan untuk slot siang sebelum jam operasional berakhir.",
-                "5 menit yang lalu"
-            ),
-            NotificationItem(
-                "⚠️",
-                "Prediksi Siap!",
-                "Dari telur 500 g & sampah 60,00 kg, estimasi hasil 1.800 g. Simpan ke riwayat atau buat jadwal.",
-                "20 menit yang lalu"
-            ),
-            NotificationItem(
-                "♻️",
-                "Saatnya panen",
-                "Kandang 2 dan 1 sudah saatnya untuk panen hasil maggot",
-                "1 jam yang lalu"
-            ),
-        )
+        setupToolbar()
+        setupRecycler()
+        setupFilterButtons()
+        setupObservers()
 
-        val notificationAdapter = NotificationAdapter(dummyData)
-        recyclerView.adapter = notificationAdapter
+        viewModel.getNotification()  // fetch API
+    }
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
 
-        toolbar = findViewById(R.id.topAppBar)
-        toolbar.setNavigationOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(intent)
+    private fun setupToolbar() {
+        binding.topAppBar.setNavigationOnClickListener {
+            startActivity(
+                Intent(this, MainActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            )
             finish()
         }
     }
 
+    private fun setupRecycler() {
+        notificationAdapter = NotificationAdapter(emptyList()) { item ->
+            viewModel.markNotificationAsRead(item)
 
-    inner class NotificationAdapter(private val items: List<NotificationItem>) :
-        RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
+            val intent = Intent(this, NotificationDetailActivity::class.java)
+            intent.putExtra("notif_data", item)
+            startActivity(intent)
+        }
+        binding.recyclerNotifications.apply {
+            adapter = notificationAdapter
+            layoutManager = LinearLayoutManager(this@NotificationsActivity)
+        }
+    }
+
+    private fun setupObservers() {
+
+        viewModel.isLoading.observe(this) { loading ->
+            //binding.progressBar.visibility = if (loading) View.VISIBLE else View.GONE
+        }
+
+        // observe data yang sudah difilter
+        viewModel.filteredData.observe(this) { list ->
+            notificationAdapter.updateData(list)
+        }
+
+        viewModel.errorMessage.observe(this) { msg ->
+            if (!msg.isNullOrEmpty()) {
+                //binding.textError.visibility = View.VISIBLE
+                //binding.textError.text = msg
+            }
+        }
+    }
+
+
+    private fun setupFilterButtons() {
+
+        binding.btnSemua.setOnClickListener {
+            viewModel.setFilter(NotificationViewModel.FilterType.SEMUA)
+            setButtonActive(binding.btnSemua)
+        }
+
+        binding.btnBelum.setOnClickListener {
+            viewModel.setFilter(NotificationViewModel.FilterType.BELUM)
+            setButtonActive(binding.btnBelum)
+        }
+
+        binding.btnDibaca.setOnClickListener {
+            viewModel.setFilter(NotificationViewModel.FilterType.DIBACA)
+            setButtonActive(binding.btnDibaca)
+        }
+    }
+
+    private fun setButtonActive(active: Button) {
+        val buttons = listOf(binding.btnSemua, binding.btnBelum, binding.btnDibaca)
+
+        buttons.forEach { button ->
+            if (button == active) {
+                button.setBackgroundTintList(getColorStateList(R.color.green))
+                button.setTextColor(getColor(R.color.white))
+            } else {
+                button.setBackgroundTintList(getColorStateList(R.color.gray))
+                button.setTextColor(getColor(R.color.gray_light))
+            }
+        }
+    }
+
+
+
+    // ADAPTER
+    inner class NotificationAdapter(
+        private var items: List<NotificationItem>,
+        private val onItemClicked: (NotificationItem) -> Unit
+    ) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
 
         inner class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val icon: TextView = itemView.findViewById(R.id.notificationIcon)
@@ -91,14 +141,23 @@ class NotificationsActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
             val item = items[position]
-            holder.icon.text = item.icon
+
+            holder.icon.text = "🔔"
             holder.title.text = item.title
-            holder.description.text = item.description
-            holder.time.text = item.time
+            holder.description.text = item.message
+            holder.time.text = item.createdAt.replace("T", " ").substring(0, 16)
+
+            // === KLIK ITEM ===
+            holder.itemView.setOnClickListener {
+                onItemClicked(item)
+            }
         }
 
-        override fun getItemCount(): Int {
-            return items.size
+        override fun getItemCount() = items.size
+
+        fun updateData(newItems: List<NotificationItem>) {
+            items = newItems
+            notifyDataSetChanged()
         }
     }
 }
