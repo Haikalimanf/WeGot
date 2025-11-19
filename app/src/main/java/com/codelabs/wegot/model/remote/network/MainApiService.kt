@@ -16,6 +16,8 @@ import com.codelabs.wegot.model.remote.response.hitoryPencacahan.GetHistoryPenca
 import com.codelabs.wegot.model.remote.response.prediksi.AddFaseResponse
 import com.codelabs.wegot.model.remote.response.prediksi.AddSiklusResponse
 import com.codelabs.wegot.model.remote.response.prediksi.GetFaseResponse
+import com.codelabs.wegot.model.remote.response.prediksi.GetHasilPanenDashboardResponse
+import com.codelabs.wegot.model.remote.response.prediksi.GetHasilPanenSiklusResponse
 import com.codelabs.wegot.model.remote.response.prediksi.GetSiklusResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -58,7 +60,7 @@ interface MainApiService {
     @POST ("api/siklus/{siklusId}/fase")
     suspend fun addFasePanen(
         @Path("siklusId") siklusId: Int,
-        @Body faseRequest: AddFasePembesaranRequest
+        @Body faseRequest: AddFaseRequest
     ): AddFaseResponse
 
     @GET ("api/siklus/{siklusId}/fase")
@@ -76,6 +78,14 @@ interface MainApiService {
 
     @GET("api/pencacahan")
     suspend fun getHistoryPencacahan(): GetHistoryPencacahanResponse
+
+    @GET ("api/prediksi/siklus/{siklusId}")
+    suspend fun getHasilPanenSiklus(
+        @Path("siklusId") siklusId: Int,
+    ): GetHasilPanenSiklusResponse
+
+    @GET ("api/prediksi/total")
+    suspend fun getHasilPanenDashboard(): GetHasilPanenDashboardResponse
 
     @POST("api/auth/logout")
     suspend fun logout(): LogoutResponse

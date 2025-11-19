@@ -8,6 +8,8 @@ import com.codelabs.wegot.model.remote.response.RemoteDataSource
 import com.codelabs.wegot.model.remote.response.prediksi.AddFaseResponse
 import com.codelabs.wegot.model.remote.response.prediksi.AddSiklusResponse
 import com.codelabs.wegot.model.remote.response.prediksi.GetFaseResponse
+import com.codelabs.wegot.model.remote.response.prediksi.GetHasilPanenDashboardResponse
+import com.codelabs.wegot.model.remote.response.prediksi.GetHasilPanenSiklusResponse
 import com.codelabs.wegot.model.remote.response.prediksi.GetSiklusResponse
 import javax.inject.Inject
 
@@ -151,31 +153,50 @@ class PrediksiRepository @Inject constructor(
         siklusId: Int,
         jenis: String,
         tanggal: String,
-        jumlahMakanan: Int,
+        jumlahHasil: Int, // hasil panen
         catatan: String
     ): ApiResponse<AddFaseResponse> {
         return try {
-            val faseRequest = AddFasePembesaranRequest(
+            val faseRequest = AddFaseRequest(
                 jenis = jenis,
                 tanggal = tanggal,
-                jumlahMakanan = jumlahMakanan,
+                jumlahTelur = jumlahHasil,
+                mediaTelur = "",
                 catatan = catatan
             )
 
-            val response = remoteDataSource.addFasePanen(siklusId, faseRequest)
-            Log.d("PrediksiRepository", "Add Fase Response: $response")
+            val response = remoteDataSource.addFase(siklusId, faseRequest)
+            Log.d("PrediksiRepository", "Add Fase Panen Response: $response")
 
             if (response.success) {
                 ApiResponse.Success(response)
             } else {
-                ApiResponse.Error("Gagal menambahkan fase")
+                ApiResponse.Error("Gagal menambahkan fase panen")
             }
         } catch (e: Exception) {
-            Log.e("PrediksiRepository", "Error adding fase: ${e.message}", e)
+            Log.e("PrediksiRepository", "Error adding fase panen: ${e.message}", e)
             ApiResponse.Error(e.message ?: "Terjadi kesalahan")
         }
     }
 
+
+    suspend fun getHasilPanenSiklus(siklusId: Int): ApiResponse<GetHasilPanenSiklusResponse> {
+        return try {
+            val response = remoteDataSource.getHasilPanenSiklus(siklusId)
+            if (response.success) ApiResponse.Success(response) else ApiResponse.Error("Failed to fetch hasil panen")
+        } catch (e: Exception) {
+            ApiResponse.Error(e.message ?: "Unknown error")
+        }
+    }
+
+    suspend fun getHasilPanenDashboard(): ApiResponse<GetHasilPanenDashboardResponse> {
+        return try {
+            val response = remoteDataSource.getHasilPanenDashboard()
+            ApiResponse.Success(response)
+        } catch (e: Exception) {
+            ApiResponse.Error(e.message.toString())
+        }
+    }
 
 
 }

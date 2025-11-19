@@ -16,6 +16,8 @@ import com.codelabs.wegot.model.remote.response.hitoryPencacahan.GetHistoryPenca
 import com.codelabs.wegot.model.remote.response.prediksi.AddFaseResponse
 import com.codelabs.wegot.model.remote.response.prediksi.AddSiklusResponse
 import com.codelabs.wegot.model.remote.response.prediksi.GetFaseResponse
+import com.codelabs.wegot.model.remote.response.prediksi.GetHasilPanenDashboardResponse
+import com.codelabs.wegot.model.remote.response.prediksi.GetHasilPanenSiklusResponse
 import com.codelabs.wegot.model.remote.response.prediksi.GetSiklusResponse
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -88,4 +90,9 @@ class RemoteDataSource @Inject constructor(
 
     suspend fun getFase(siklusId: Int): GetFaseResponse = mainApiService.getFase(siklusId)
 
+    suspend fun getHasilPanenSiklus(siklusId: Int): GetHasilPanenSiklusResponse =
+        mainApiService.getHasilPanenSiklus(siklusId)
+
+    suspend fun getHasilPanenDashboard(): GetHasilPanenDashboardResponse =
+        mainApiService.getHasilPanenDashboard()
 }
