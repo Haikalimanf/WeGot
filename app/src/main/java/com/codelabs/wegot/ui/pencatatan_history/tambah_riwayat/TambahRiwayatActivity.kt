@@ -1,5 +1,6 @@
 package com.codelabs.wegot.ui.pencatatan_history.tambah_riwayat
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.widget.Toast
@@ -74,6 +75,7 @@ class TambahRiwayatActivity : AppCompatActivity() {
 
         viewModel.addHistoryResult.observe(this) { response ->
             Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
+            setResult(Activity.RESULT_OK)
             finish()
         }
 
