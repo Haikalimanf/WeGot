@@ -6,6 +6,9 @@ import android.view.View
 import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -38,6 +41,20 @@ class ChatbotActivity : AppCompatActivity() {
         binding = ActivityChatbotBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.chatContainer) { view, insets ->
+            val imeHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+            if (imeHeight > 0) {
+                binding.materialCardView.visibility = View.GONE
+                binding.rvChat.visibility = View.VISIBLE
+            } else {
+                if (chatHistory.isEmpty()) {
+                    binding.materialCardView.visibility = View.VISIBLE
+                    binding.rvChat.visibility = View.GONE
+                }
+            }
+            view.translationY = if (imeHeight > 0) -imeHeight.toFloat() else 0f
+            insets
+        }
 
 
         toolbar = findViewById(R.id.topAppBar)
@@ -54,6 +71,21 @@ class ChatbotActivity : AppCompatActivity() {
         rvChat.adapter = adapter
 
         binding.rvChat.visibility = View.GONE
+
+        binding.btnSuggestion1.setOnClickListener {
+            binding.edtMessage.setText(binding.btnSuggestion1.text.toString())
+            binding.edtMessage.setSelection(binding.edtMessage.text.length)
+        }
+
+        binding.btnSuggestion2.setOnClickListener {
+            binding.edtMessage.setText(binding.btnSuggestion2.text.toString())
+            binding.edtMessage.setSelection(binding.edtMessage.text.length)
+        }
+
+        binding.btnSuggestion3.setOnClickListener {
+            binding.edtMessage.setText(binding.btnSuggestion3.text.toString())
+            binding.edtMessage.setSelection(binding.edtMessage.text.length)
+        }
 
         binding.btnSend.setOnClickListener {
             val text = binding.edtMessage.text.toString().trim()
