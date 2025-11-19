@@ -107,7 +107,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputJumlahMakanan"
             android:layout_width="match_parent"
-            android:hint="Masukkan Jumlah Makanan"
+            android:hint="Masukkan Jumlah Makanan (Kg)"
             android:layout_height="wrap_content"
             android:focusable="true"
             android:clickable="true"
