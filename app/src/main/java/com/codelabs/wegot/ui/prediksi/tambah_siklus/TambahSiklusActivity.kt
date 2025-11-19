@@ -111,9 +111,7 @@ class TambahSiklusActivity : AppCompatActivity() {
                     binding.btnSimpanSiklus.text = "Simpan Siklus"
                     Toast.makeText(this, "Siklus berhasil disimpan", Toast.LENGTH_SHORT).show()
 
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                    startActivity(intent)
+                    setResult(RESULT_OK)
                     finish()
                 }
                 is ApiResponse.Error -> {
@@ -124,4 +122,5 @@ class TambahSiklusActivity : AppCompatActivity() {
             }
         }
     }
+
 }

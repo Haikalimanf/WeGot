@@ -51,13 +51,11 @@ class DetailSiklusAdapter(
 
         fun bind(item: FaseItem, position: Int) {
             if (item.isEmpty) {
-                // Tampilkan data untuk fase kosong
                 binding.tvTitle.text = item.jeniFase
                 binding.tvDate.text = "Belum diatur"
                 binding.tvDesc.text = "Klik untuk menambah data ${item.jeniFase.lowercase()}"
                 binding.tvDesc.setTextColor(binding.root.context.getColor(android.R.color.darker_gray))
 
-                // Show arrow icon untuk fase kosong (kecuali PENETASAN yang sudah otomatis)
                 if (item.jeniFase != "PENETASAN") {
                     binding.arrowIcon.visibility = View.VISIBLE
                     binding.arrowIcon.setOnClickListener {
@@ -67,21 +65,28 @@ class DetailSiklusAdapter(
                     binding.arrowIcon.visibility = View.GONE
                 }
             } else {
-                // Tampilkan data normal
                 val faseData = item.data!!
                 binding.tvTitle.text = faseData.jenis
                 binding.tvDate.text = formatDate(faseData.tanggal)
                 binding.tvDesc.text = faseData.keterangan
                 binding.tvDesc.setTextColor(binding.root.context.getColor(android.R.color.black))
 
-                // Show arrow icon untuk PANEN dan PEMBESARAN yang sudah ada data
-                if (faseData.jenis.uppercase() == "PANEN" || faseData.jenis.uppercase() == "PEMBESARAN") {
-                    binding.arrowIcon.visibility = View.VISIBLE
-                    binding.arrowIcon.setOnClickListener {
-                        onFaseClick(faseData)
+                when (faseData.jenis.uppercase()) {
+                    "PANEN" -> {
+                        binding.arrowIcon.visibility = View.VISIBLE
+                        binding.arrowIcon.setOnClickListener {
+                            onFaseClick(faseData)
+                        }
                     }
-                } else {
-                    binding.arrowIcon.visibility = View.GONE
+                    "PEMBESARAN" -> {
+                        binding.arrowIcon.visibility = View.GONE
+                    }
+                    "PENETASAN" -> {
+                        binding.arrowIcon.visibility = View.GONE
+                    }
+                    else -> {
+                        binding.arrowIcon.visibility = View.GONE
+                    }
                 }
             }
 
@@ -92,6 +97,7 @@ class DetailSiklusAdapter(
                 binding.lineConnector.visibility = View.VISIBLE
             }
         }
+
 
         private fun formatDate(dateString: String): String {
             return try {

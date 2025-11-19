@@ -12,7 +12,6 @@ import com.codelabs.wegot.ui.adapter.DetailSiklusAdapter
 import com.codelabs.wegot.ui.prediksi.hasil_prediksi.HasilPrediksiActivity
 import com.codelabs.wegot.ui.prediksi.tambah_fase.TambahFaseActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.toString
 
 @AndroidEntryPoint
 class DetailSiklusActivity : AppCompatActivity() {
@@ -78,7 +77,7 @@ class DetailSiklusActivity : AppCompatActivity() {
                         intent.putExtra("JUMLAH_TELUR", jumlahTelur)
                         intent.putExtra("MEDIA_TELUR", mediaTelur)
                         intent.putExtra("MODE", "ADD")
-                        startActivityForResult(intent, 1001)
+                        startActivityForResult(intent, REQUEST_ADD_FASE)
                     }
                     "PANEN" -> {
                         Toast.makeText(this, "Fase pembesaran harus diselesaikan terlebih dahulu", Toast.LENGTH_SHORT).show()
@@ -104,6 +103,10 @@ class DetailSiklusActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadFaseData()
+    }
 
     private fun loadFaseData() {
         val siklusId = intent.getIntExtra("EXTRA_ID", -1)

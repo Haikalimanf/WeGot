@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codelabs.wegot.model.remote.network.ApiResponse
+import com.codelabs.wegot.model.remote.response.prediksi.GetHasilPanenDashboardResponse
+import com.codelabs.wegot.model.remote.response.prediksi.GetHasilPanenSiklusResponse
 import com.codelabs.wegot.model.remote.response.prediksi.GetSiklusResponse
 import com.codelabs.wegot.repository.PrediksiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,4 +27,20 @@ class PrediksiViewModel @Inject constructor(
             _siklusData.value = result
         }
     }
+
+    suspend fun fetchHasilPanenSiklus(siklusId: Int): ApiResponse<GetHasilPanenSiklusResponse> {
+        return repository.getHasilPanenSiklus(siklusId)
+    }
+
+    private val _hasilDashboard = MutableLiveData<ApiResponse<GetHasilPanenDashboardResponse>>()
+    val hasilDashboard: LiveData<ApiResponse<GetHasilPanenDashboardResponse>> = _hasilDashboard
+
+    fun getHasilPanenDashboard() {
+        viewModelScope.launch {
+            _hasilDashboard.value = ApiResponse.Empty
+            val result = repository.getHasilPanenDashboard()
+            _hasilDashboard.value = result
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.codelabs.wegot.ui.pencatatan_history
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -22,6 +24,7 @@ import com.codelabs.wegot.ui.adapter.HistoryAdapter
 import com.codelabs.wegot.ui.auth.login.LoginActivity
 import com.codelabs.wegot.ui.auth.login.LoginViewModel
 import com.codelabs.wegot.ui.notifications.NotificationsActivity
+import com.codelabs.wegot.ui.pencatatan_history.tambah_riwayat.TambahRiwayatActivity
 import com.codelabs.wegot.utils.DateTimeUtils.getDayName
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -36,6 +39,14 @@ class PencatatanHistoryFragment : Fragment() {
     private val historyAdapter = HistoryAdapter()
     private val loginViewModel: LoginViewModel by viewModels()
     private val viewModel: PencatatanHistoryViewModel by viewModels()
+
+    private val addHistoryLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.getHistoryPencacahan()
+        }
+    }
 
 
     override fun onCreateView(
@@ -139,7 +150,9 @@ class PencatatanHistoryFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.fabAddPrediksi.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_pencatatan_history_to_tambahRiwayatActivity)
+            // Gunakan launcher untuk start activity
+            val intent = Intent(requireContext(), TambahRiwayatActivity::class.java)
+            addHistoryLauncher.launch(intent)
         }
 
         binding.imgNotification.setOnClickListener {

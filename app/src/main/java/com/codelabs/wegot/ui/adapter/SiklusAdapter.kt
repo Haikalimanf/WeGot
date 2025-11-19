@@ -1,5 +1,6 @@
 package com.codelabs.wegot.ui.adapter
 
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -37,6 +38,19 @@ class SiklusAdapter(
 
             binding.tvSeeDetail.setOnClickListener {
                 onItemClick(dataItem)
+            }
+
+            val resultText = item.result ?: "Belum tersedia"
+            binding.tvResultPrediksiTotal.text = resultText
+
+            // choose sizes in SP (prefer using dimens.xml for maintainability)
+            val smallSp = 18f
+            val largeSp = 60f
+
+            if (resultText.equals("Belum tersedia", ignoreCase = true)) {
+                binding.tvResultPrediksiTotal.setTextSize(TypedValue.COMPLEX_UNIT_SP, smallSp)
+            } else {
+                binding.tvResultPrediksiTotal.setTextSize(TypedValue.COMPLEX_UNIT_SP, largeSp)
             }
         }
     }

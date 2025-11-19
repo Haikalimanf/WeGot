@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:layout_marginBottom="@dimen/dimen_height_bottom_navigation"
     tools:context=".ui.prediksi.PrediksiFragment">
 
     <TextView
@@ -96,7 +97,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvCek"
-        app:layout_constraintVertical_bias="0.928"
+        app:layout_constraintVertical_bias="1.0"
         app:tint="@android:color/white" />
 
     <androidx.recyclerview.widget.RecyclerView

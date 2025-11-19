@@ -1,5 +1,6 @@
 package com.codelabs.wegot.ui.prediksi.tambah_fase
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -44,7 +45,6 @@ class TambahFaseViewModel @Inject constructor(
             _addFaseResult.value = ApiResponse.Empty
 
             try {
-                // 1. Tambah fase PEMBESARAN
                 val pembesaranResult = repository.addFasePembesaran(
                     siklusId = siklusId,
                     jenis = "PEMBESARAN",
@@ -53,29 +53,29 @@ class TambahFaseViewModel @Inject constructor(
                     catatan = catatan
                 )
 
-                when (pembesaranResult) {
-                    is ApiResponse.Success -> {
-                        // 2. Tambah fase PANEN dengan input yang sama
-                        val panenResult = repository.addFasePanen(
+                if (pembesaranResult is ApiResponse.Success) {
+                    try {
+                        repository.addFasePanen(
                             siklusId = siklusId,
                             jenis = "PANEN",
-                            tanggal = tanggalPembesaran, // Gunakan tanggal yang sama
-                            jumlahMakanan = jumlahMakanan, // Gunakan jumlah makanan yang sama
-                            catatan = "Fase panen - $catatan"
+                            tanggal = tanggalPembesaran,
+                            jumlahHasil = 0,
+                            catatan = "Fase panen otomatis"
                         )
+                    } catch (e: Exception) {
+                        Log.w("TambahFaseViewModel", "Fase panen error: ${e.message}")
+                    }
 
-                        _addFaseResult.value = panenResult
-                    }
-                    is ApiResponse.Error -> {
-                        _addFaseResult.value = pembesaranResult
-                    }
-                    is ApiResponse.Empty -> {
-                        _addFaseResult.value = ApiResponse.Error("Terjadi kesalahan saat menambah fase pembesaran")
-                    }
+                    // Selalu return success karena PEMBESARAN berhasil
+                    _addFaseResult.value = ApiResponse.Success(pembesaranResult.data)
+                } else {
+                    _addFaseResult.value = pembesaranResult
                 }
+
             } catch (e: Exception) {
                 _addFaseResult.value = ApiResponse.Error(e.message ?: "Terjadi kesalahan")
             }
         }
     }
+
 }
