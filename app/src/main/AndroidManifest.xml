@@ -15,9 +15,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App.Starting">
         <activity
+            android:name=".ui.pencatatan_history.detail_pencatatan_history.HistoryDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.WeGot"/>
+        <activity
             android:name=".ui.notifications.NotificationDetailActivity"
-            android:theme="@style/Theme.WeGot"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.WeGot" />
         <activity
             android:name=".ui.auth.register.RegisterActivity"
             android:exported="false"
@@ -62,7 +66,7 @@
             android:theme="@style/Theme.WeGot" />
         <activity
             android:name=".ui.MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>

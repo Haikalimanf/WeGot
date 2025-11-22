@@ -1,10 +1,14 @@
 package com.codelabs.wegot.model.remote.response.hitoryPencacahan
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 data class GetHistoryPencacahanResponse(
 	val data: List<DataItem>,
 	val status: String
 )
 
+@Parcelize
 data class DataItem(
 	val tanggalWaktu: String? = "",
 	val createdAt: String? = "",
@@ -12,5 +16,5 @@ data class DataItem(
 	val catatan: String? = "",
 	val id: Int? = 0,
 	val userId: Int? = 0
-)
+) : Parcelable
 

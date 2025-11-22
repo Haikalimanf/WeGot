@@ -24,6 +24,7 @@ import com.codelabs.wegot.ui.adapter.HistoryAdapter
 import com.codelabs.wegot.ui.auth.login.LoginActivity
 import com.codelabs.wegot.ui.auth.login.LoginViewModel
 import com.codelabs.wegot.ui.notifications.NotificationsActivity
+import com.codelabs.wegot.ui.pencatatan_history.detail_pencatatan_history.HistoryDetailActivity
 import com.codelabs.wegot.ui.pencatatan_history.tambah_riwayat.TambahRiwayatActivity
 import com.codelabs.wegot.utils.DateTimeUtils.getDayName
 import dagger.hilt.android.AndroidEntryPoint
@@ -166,7 +167,14 @@ class PencatatanHistoryFragment : Fragment() {
             adapter = historyAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
+
+        historyAdapter.setOnItemClickListener { historyItem ->
+            val intent = Intent(requireContext(), HistoryDetailActivity::class.java)
+            intent.putExtra("history_data", historyItem)
+            startActivity(intent)
+        }
     }
+
 
     private fun mapDataToWeek(data: List<DataItem>): LinkedHashMap<String, Float> {
         val weekMap = linkedMapOf(

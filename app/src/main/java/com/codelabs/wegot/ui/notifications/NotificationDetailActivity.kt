@@ -18,6 +18,8 @@ class NotificationDetailActivity : AppCompatActivity() {
         binding = ActivityNotificationDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupActionBar()
+
         val notif = intent.getParcelableExtra<NotificationItem>("notif_data")
         if (notif != null) {
             setupUI(notif)
@@ -28,5 +30,16 @@ class NotificationDetailActivity : AppCompatActivity() {
         binding.tvTitle.text = notif.title
         binding.tvMessage.text = notif.message
         binding.tvDate.text = notif.createdAt.replace("T", " ").substring(0, 16)
+    }
+
+    private fun setupActionBar() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.title = "Detail Notifikasi"
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

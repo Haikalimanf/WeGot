@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
