@@ -29,13 +29,7 @@
         <activity
             android:name=".ui.auth.login.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.WeGot">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.WeGot"/>
         <activity
             android:name=".ui.prediksi.hasil_prediksi.HasilPrediksiActivity"
             android:exported="false"
@@ -66,7 +60,14 @@
             android:theme="@style/Theme.WeGot" />
         <activity
             android:name=".ui.MainActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:theme="@style/Theme.App.Starting">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

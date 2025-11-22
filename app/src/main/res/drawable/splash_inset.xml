@@ -3,4 +3,5 @@
     android:insetLeft="40dp"
     android:insetRight="40dp"
     android:insetTop="40dp"
-    android:insetBottom="40dp"/>
+    android:insetBottom="40dp"
+    android:gravity="center" />
